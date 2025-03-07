@@ -1,0 +1,162 @@
+
+.test {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+
+.heading {
+  flex-basis: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.extraInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 30%;
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.timer {
+  font-size: 18px;
+  color: #ff3333;
+}
+
+.videoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px; /* Move the video container up */
+  width: 100%; /* Ensure it takes full width */
+}
+
+.videoContainer video {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.questionNav {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.questionIcon {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.questionIcon:hover {
+  background-color: #007bff;
+}
+
+.questionArea {
+  flex-basis: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.questionNumber {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.options label {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.navigation {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-top: 20px;
+  margin-left: -30rem;
+}
+
+.navigation button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.navigation button:hover {
+  background-color: #0056b3;
+}
+
+.legend {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+}
+
+.legendIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.submitButton {
+  /* margin-left: -1px; */
+  width: 10rem;
+  padding: 10px 20px;
+  background-color: #28a745;
+}
+
+.submitButton:hover {
+  background-color: #218838;
+}

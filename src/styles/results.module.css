@@ -1,0 +1,54 @@
+/* results.module.css */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #fff;
+  color: #000;
+  font-family: Arial, sans-serif;
+}
+
+.content {
+  text-align: center;
+  background-color: #f4f4f4;
+  border: 1px solid #ddd;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;  /* Ensure responsiveness */
+  max-width: 600px; /* Limit the maximum width for better alignment */
+  box-sizing: border-box;
+}
+
+.title {
+  margin-left: -15rem;
+  font-size: 28px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.message {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Make the button fill the container */
+  max-width: 200px; /* Limit the width of the button */
+  margin-top: 20px; /* Space between the message and button */
+  margin-left: -1rem;
+}
+
+.button:hover {
+  background-color: #333;
+}
