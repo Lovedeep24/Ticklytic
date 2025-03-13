@@ -18,7 +18,7 @@ const login=async(req,res)=>{
 
         if(!User)
             {
-                res.status(404).json("Do not Exist");
+                res.status(403).json("Do not Exist");
             }
         else
             {

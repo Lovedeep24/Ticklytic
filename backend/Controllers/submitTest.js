@@ -19,10 +19,11 @@ const submitTest = async (req, res) => {
         return res.status(400).json({ message: 'All fields are mandatory' });
       }
     }
-
+    
     console.log('Received data:', { finalScore, totalQuestions, email });
-
+    const testId=req.params.testId;
     const newSubmission = new TestSubmission({
+      testId,
       finalScore,
       totalQuestions,
       email,

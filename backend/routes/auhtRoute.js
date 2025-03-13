@@ -11,13 +11,15 @@ const insertQuestion = require("../Controllers/insertQuestions");
 const createTest=require('../Controllers/createTests');
 const addquestionToTest=require('../Controllers/quesToTest');
 const allTests=require('../Controllers/allTests');
-const questions=require('../Controllers/showTest')
+const questions=require('../Controllers/showTest');
+const fetchUsersData=require('../Controllers/usersInfo');
 // const tests = require("../Controllers/createTests");
 const router = express.Router();
 
 router.post("/login", login);
 router.post("/signup",signup);
 router.get("/questions", findQuestion);
+router.get("/fetchUsers", fetchUsersData);
 router.post("/insertquestions", validateQuestion,insertQuestion);
 router.post("/createTest", createTest);
 router.post("/:testid/ques-to-test", addquestionToTest);

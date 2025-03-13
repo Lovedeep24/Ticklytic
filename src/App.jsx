@@ -10,7 +10,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Test from './pages/Test';
 import Results from './pages/Results';
-import Permissions from './pages/Permissions';
+import Permissions from './pages/Permissions1';
 import AdminPortal from './pages/AdminPortal';
 import AddQuestion from './pages/AddQuestion';
 import Submissions from './pages/Submissions';

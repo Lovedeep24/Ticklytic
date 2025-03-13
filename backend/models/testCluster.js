@@ -6,6 +6,11 @@ const clusterSchema=new mongoose.Schema({
         type: String,
         required: [true, "You must add a cluster name"]
     },
+    duration:
+    {
+        type: number,
+        required: [true, "You must give test duration"]
+    },
     tests:
     {
         type: [{type:mongoose.Schema.Types.ObjectId,ref:'Tests'}],
