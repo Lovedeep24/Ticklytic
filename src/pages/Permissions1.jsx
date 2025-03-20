@@ -1,14 +1,18 @@
 "use client";
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { PlayIcon, CameraIcon, MicrophoneIcon, ComputerDesktopIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+
 export default function Permissions() {
   const [video, setVideo] = useState(false);
   const [audio, setAudio] = useState(false);
   const [screenShare, setScreenShare] = useState(false);
   const [canHear, setCanHear] = useState(false);
   const videoRef = useRef(null);
-
+  const navigate = useNavigate();
   const videoPermission = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -17,7 +21,7 @@ export default function Permissions() {
       }
       setVideo(true);
     } catch (error) {
-      alert("Please grant access to camera");
+      toast.error("Please grant access to camera");
       console.log(error);
     }
   };
@@ -27,7 +31,7 @@ export default function Permissions() {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       setAudio(true);
     } catch (error) {
-      alert("Please grant access to microphone");
+      toast.error("Please grant access to microphone");
       console.log(error);
     }
   };
@@ -36,28 +40,22 @@ export default function Permissions() {
     try {
       const screenShare = await navigator.mediaDevices.getDisplayMedia({ video: true });
       setScreenShare(true);
-      alert("Screen Share Started");
+      toast.success("Screen Share Started");
     } catch (error) {
-      alert("Screen Sharing is not Available");
+      toast.error("Screen Sharing is not Available");
       console.log(error);
     }
   };
 
-  const allPermissionsGranted = video && audio && screenShare && canHear;
+  const allPermissionsGranted = video && audio && screenShare;
 
 
   const handleTest=async()=>{
     const testId=localStorage.getItem("testId");
-     const response=await get(`http://localhost:9000/tests/${testId}/questions`,{
-        headers: {
-          'Authorization': `Bearer ${token}`,  
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    navigate(`/test/${testId}`);
   }
   return (
-    <div className="flex border-none border-gray-400 bg-[rgb(22,29,41)] min-h-screen">
+    <div className="flex border-none border-gray-400 bg-[rgb(22,29,41)] w-screen h-screen">
     
       <div className="w-1/2 p-4 flex justify-center items-center border-none border-white">
         <video
@@ -88,7 +86,7 @@ export default function Permissions() {
           </div>
         </div>
 
-  
+  <Toaster richColors position="top-center" />
         <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
           <MicrophoneIcon className="w-8 h-8 text-white" />
           <div className="flex items-center space-x-2 w-full justify-between">
@@ -124,7 +122,7 @@ export default function Permissions() {
                 : "bg-gray-500 text-gray-300 cursor-not-allowed"
             }`}
           >
-            Start Interview
+            Process to Test
           </div>
         </div>
       </div>

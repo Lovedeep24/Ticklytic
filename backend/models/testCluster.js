@@ -24,4 +24,5 @@ const clusterSchema=new mongoose.Schema({
 });
 
 
-const testCluster = mongoose.model('testCluster', testClusterSchema);
+const testCluster = mongoose.model('testCluster', clusterSchema);
+module.exports = testCluster;

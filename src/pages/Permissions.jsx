@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { MediaStreamContext } from "../Context/MediaStreamContext";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function Permissions() {
   const { stream, setStream } = useContext(MediaStreamContext);
@@ -44,7 +46,8 @@ export default function Permissions() {
     
       const proceedToTest = () => {
         if (stream) {
-          navigate('/test');
+          const testId=localStorage.getItem("testId");
+          navigate(`/test/${testId}`);
         } else {
           setError('Please allow camera and microphone access before proceeding.');
         }

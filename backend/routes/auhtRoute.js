@@ -24,7 +24,7 @@ router.post("/insertquestions", validateQuestion,insertQuestion);
 router.post("/createTest", createTest);
 router.post("/:testid/ques-to-test", addquestionToTest);
 router.get("/tests", allTests);
-router.get("/tests/:testId/questions",validateToken, questions);
+router.get("/tests/:testId/questions", questions);
 router.post('/submitTest', submitTest);
 router.get('/submissions', submissioncheck );
 // router.post('/forget-password', forgotPassword);
