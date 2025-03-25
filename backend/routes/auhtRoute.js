@@ -13,6 +13,7 @@ const addquestionToTest=require('../Controllers/quesToTest');
 const allTests=require('../Controllers/allTests');
 const questions=require('../Controllers/showTest');
 const fetchUsersData=require('../Controllers/usersInfo');
+const deleteTest = require("../Controllers/deleteTest");
 // const tests = require("../Controllers/createTests");
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.get("/tests", allTests);
 router.get("/tests/:testId/questions", questions);
 router.post('/submitTest', submitTest);
 router.get('/submissions', submissioncheck );
+router.delete('/deleteTest', deleteTest );
 // router.post('/forget-password', forgotPassword);
 // router.get('/reset-password', resetPassword );
 

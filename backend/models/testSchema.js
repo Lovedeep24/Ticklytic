@@ -10,6 +10,11 @@ const testSchema = new mongoose.Schema({
         type: String,
         required: [true, "You must add a description"]
     },
+    duration:
+    {
+        type: Number,
+        required: [true,"Must give test duration"]
+    },
     questions:
     {
         type: [{type:mongoose.Schema.Types.ObjectId,ref:'Question'}],

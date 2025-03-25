@@ -129,7 +129,7 @@ export default function TestCluster() {
   
   
   return (
-    <div className=' w-full m-0 p-0'>
+    <div className='bg-black w-full h-screen m-0 p-0'>
     <h1 className="text-white text-4xl">Test Cluster</h1>
  
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">

@@ -43,9 +43,21 @@ const [errors, setErrors] = useState({
         });
         console.log(response.status);
         if (response.status === 200) {
-          toast.success("login successfull"); 
-          navigate("/tests")
-          console.log("login success");
+          localStorage.setItem("accessToken", response.data.accessToken);
+          if(role === "User")
+          {
+            localStorage.setItem("userId",response.data.userId);
+            toast.success("login successfull"); 
+            navigate("/tests")
+            console.log("login success");
+          }
+          else if(role === "Admin")
+          {
+            toast.success("login successfull");
+            navigate("/admin");
+            console.log("login success");
+          }
+       
         }
     } catch (error) {
         if (error.response) {

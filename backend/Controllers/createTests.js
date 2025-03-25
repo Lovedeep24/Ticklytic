@@ -6,20 +6,28 @@ const tests = async(req,res)=>{
     const description = req.body.description;  
     const duration = req.body.duration;   
     try {
-        if(!testName || !description ||duration)
+        if(!testName || !description || !duration)
         {
-            return res.status(401).json({status: "failed", message: "Please provide a test name and description also duration"});
+            return res.status(401).json({status: "failed", message: "Please provide all Fields"});
         }
-        const newTest= await Test.create(
-            {
-                testName: testName,
-                duration:duration,
-                description: description,
-                questions: [],
-            }   
-        );
-        console.log("Test created");
-        res.status(200).json({status: "success",data: newTest,});
+        const testExist = await Test.findOne({testName});
+        if(testExist)
+        {
+            res.status(409).json("Test already Exist with this name");
+        }
+        else{
+            const newTest= await Test.create(
+                {
+                    testName: testName,
+                    duration:duration,
+                    description: description,
+                    questions: [],
+                }   
+            );
+            console.log("Test created");
+            res.status(200).json({status: "success",data: newTest,});
+        }
+        
     } catch (error) {
         res.status(500).json({status: "failed", message: "Internal server error"});
         console.log(error.message);

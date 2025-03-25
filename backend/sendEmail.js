@@ -40,7 +40,7 @@ const sendTestResultsEmails = async () => {
     // Send email for each submission
     for (const submission of submissions) {
       const subject = 'Your Test Results';
-      const text = `Hello,\n\nThank you for taking the test. Your final score is ${submission.finalScore} out of ${submission.totalQuestions}.\n\nBest regards,\nThe Test Team SmartQ.`;
+      const text = `Hello,\n\nThank you for taking the test. Your final score is ${submission.finalScore} out of ${submission.totalQuestions}.\n\nBest regards,\nThe Test Team Ticklytic.`;
       await sendEmail(submission.email, subject, text);
       
       submission.status = true;

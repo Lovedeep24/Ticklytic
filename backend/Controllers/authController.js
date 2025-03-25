@@ -37,7 +37,7 @@ const login=async(req,res)=>{
                                 role:User.role,
                             }
                         },process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1hr"})
-                        res.status(200).json({accessToken});
+                        res.status(200).json({accessToken, userId:User.id});
                     }
                 else
                     {
@@ -54,12 +54,13 @@ const login=async(req,res)=>{
 
 const signup=async(req,res)=>{
     const {name,email,password}=req.body;
-    const hashedPassoword=await bcrypt.hash(password,10);
+    const hashedPassword=await bcrypt.hash(password,10);
     console.log(hashedPassoword);
     if(!name || !email || !password )
     {
        return res.status(404).json("All fields are mandatory");
     }
+
     try 
     {
         const existingUser=await Signup.findOne({email});
@@ -75,7 +76,7 @@ const signup=async(req,res)=>{
                 const user=await Signup.create({
                     name,
                     email,
-                    password:hashedPassoword,
+                    password:hashedPassword,
                    });
                console.log("user created");
                

@@ -1,21 +1,110 @@
 import React from 'react'
+import {
+  BellIcon,
+  CalendarIcon,
+  FileTextIcon,
+  GlobeIcon,
+  InputIcon,
+} from "@radix-ui/react-icons";
+
+import { BentoCard, BentoGrid } from "@/components/ui/bento-grid";
+import { Button } from "@/components/ui/button";
+import { CircleUserRound } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 import { useNavigate, Link } from 'react-router-dom';
 
+const features = [
+  {
+    Icon: FileTextIcon,
+    name: "Create Test",
+    description: "We automatically save your files as you type.",
+    href: "/createTest",
+    cta: "Learn more",
+    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:row-start-1 lg:row-end-4 lg:col-start-2 lg:col-end-3",
+  },
+  {
+    Icon: InputIcon,
+    name: "View All Tests",
+    description: "Search through all your files in one place.",
+    href: "/tests",
+    cta: "Learn more",
+    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",
+  },
+  {
+    Icon: GlobeIcon,
+    name: "Submissions",
+    description: "Supports 100+ languages and counting.",
+    href: "/submissions",
+    cta: "Learn more",
+    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-1 lg:col-end-2 lg:row-start-3 lg:row-end-4",
+  },
+  {
+    Icon: CalendarIcon,
+    name: "Users",
+    description: "Use the calendar to filter your files by date.",
+    href: "/",
+    cta: "Learn more",
+    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-3 lg:col-end-3 lg:row-start-1 lg:row-end-2",
+  },
+  {
+    Icon: BellIcon,
+    name: "Add Questions",
+    description:
+      "Get notified when someone shares a file or mentions you in a comment.",
+    href: "/addquestions",
+    cta: "Learn more",
+    background: <img className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-3 lg:col-end-3 lg:row-start-2 lg:row-end-4",
+  },
+];
+
+
 export default function AdminPortal() {
-   const navigate = useNavigate(); // Initialize the navigate function
   
   return (
-    <div className="h-screen p-5 font-sans bg-gray-100 rounded-lg shadow-md">
-    <Link to="/admin" className="text-blue-500 font-bold mb-5 inline-block no-underline">Admin Home</Link>
-    <br></br>
-    <Link to="/" className="text-blue-500 font-bold mb-5 inline-block no-underline">Home</Link>
-    <h1 className='text-[#333] pl-[33%]'>Admin Portal</h1>
-    <div className="pl-[27rem]">
-    <button className="h-20 w-40 px-4 py-2 m-1 rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-600" onClick={() => navigate('/addquestions')}>Add Question</button>
-    <button className="h-20 w-40 px-4 py-2 m-1 rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-600" onClick={() => navigate('/submissions')}>View Submissions</button>
-    <button className="h-20 w-40 px-4 py-2 m-1 rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-600" onClick={() => navigate('/tests')}>All Test</button>
-    <button className="h-20 w-40 px-4 py-2 m-1 rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-600" onClick={() => navigate('/createTest')}>Create Test</button>
-    </div>
+    <div className="h-full p-5 flex flex-col gap-5 font-sans bg-gray-100">
+      <div className='flex w-full justify-between items-center p-4'>
+      <h1 className='text-[#333] font-bold text-3xl'>Admin Portal</h1>
+      <DropdownMenu>
+      <DropdownMenuTrigger className='size-13' asChild>
+        <Button variant="outline" aria-label="Open account menu">
+          <CircleUserRound  size={20} strokeWidth={2} aria-hidden="true" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="max-w-64">
+        <DropdownMenuLabel className="flex flex-col">
+          <span>Signed in as</span>
+          <span className="text-xs font-normal text-foreground">admin@gmail.com</span>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+        <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
+          <Link to="/admin"><DropdownMenuItem>Admin Home</DropdownMenuItem></Link>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Logout</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+      </div>
+
+    <BentoGrid className=" lg:grid-rows-3">
+      {features.map((feature) => (
+        <BentoCard key={feature.name} {...feature} />
+      ))}
+    </BentoGrid>
     </div>
   )
 }

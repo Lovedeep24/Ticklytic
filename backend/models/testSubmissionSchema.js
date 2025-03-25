@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 
 
 const testSubmissionSchema = new mongoose.Schema({
-  finalScore: { type: Number, required: true },
+  score: { type: Number, required: true },
   totalQuestions: { type: Number, required: true },
+  testId:{type: mongoose.Schema.Types.ObjectId, ref: 'Test', required: true },
+  userId:{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   email: { type: String, required: true },
   status: { type: Boolean, default: false }
 },{

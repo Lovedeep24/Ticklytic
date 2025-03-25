@@ -8,6 +8,10 @@ const quesToTest =async(req,res)=>{
     try {
         const question= await Question.create(questionData); 
         console.log(question);
+        if(!testId)
+        {
+            res.status(404).json("testID not found");
+        } 
         const test= await Test.findByIdAndUpdate(
             testId,
             {
