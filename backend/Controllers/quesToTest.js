@@ -12,14 +12,15 @@ const quesToTest =async(req,res)=>{
         {
             res.status(404).json("testID not found");
         } 
-        const test= await Test.findByIdAndUpdate(
+        const insertedQuestions = await Question.insertMany(questionData);
+        const questionIds = insertedQuestions.map(q => q._id);  // Extract the IDs
+
+        const test = await Test.findByIdAndUpdate(
             testId,
-            {
-                $push: {questions: question._id},
-            },
-            {new: true}
-        ).populate('questions');   
-        console.log("Question added to test");
+            { $push: { questions: { $each: questionIds } } },  // Push multiple IDs at once
+            { new: true }
+        ).populate('questions');
+        console.log("Question Inserted");
         res.status(200).json({test});
     } catch (error) {
         res.status(500).json({message: error.message});

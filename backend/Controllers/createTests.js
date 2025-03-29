@@ -25,7 +25,7 @@ const tests = async(req,res)=>{
                 }   
             );
             console.log("Test created");
-            res.status(200).json({status: "success",data: newTest,});
+            res.status(200).json({status: "success", testId:newTest._id});
         }
         
     } catch (error) {
