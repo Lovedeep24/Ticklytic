@@ -25,6 +25,7 @@ const tests = async(req,res)=>{
                 }   
             );
             console.log("Test created");
+            console.log(newTest);
             res.status(200).json({status: "success", testId:newTest._id});
         }
         
@@ -34,7 +35,6 @@ const tests = async(req,res)=>{
         console.log("Test not created");
     }
    
-  
 } 
 
 module.exports = tests;

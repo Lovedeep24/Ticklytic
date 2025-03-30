@@ -160,13 +160,13 @@ export default function Test() {
     </div>
     {isOpen && <AlertDailogBox isOpen={isOpen} setIsOpen={setIsOpen} /> }
           <div className='flex flex-col w-[25%] items-center justify-center h-full border-2 border-yellow-500'>
-            <div className='w-[50%] h-[20%] '>
+            {/* <div className='w-[50%] h-[20%] '>
               <div className='flex items-center gap-0.5 font-mono'>
                 <SlidingNumber value={minutes} padStart={true} />
                 <span className='text-zinc-500'>:</span>
                 <SlidingNumber value={seconds} padStart={true} />
               </div>
-            </div>
+            </div> */}
             <div className='w-[80%] h-[40%]'>
             <video
                         ref={videoRef}

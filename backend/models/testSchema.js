@@ -15,11 +15,12 @@ const testSchema = new mongoose.Schema({
         type: Number,
         required: [true,"Must give test duration"]
     },
-    questions:
-    {
-        type: [{type:mongoose.Schema.Types.ObjectId,ref:'Question'}],
-        required: [true, "You must add questions to the test"]
-    },
+    questions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Question'
+        }
+    ],
     createdAt:
     {
         type: Date,

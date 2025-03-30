@@ -13,12 +13,11 @@ const questionsSchema = new mongoose.Schema({
     },
     correctOption:
     {
-        type: String,
+        type: Number,
         required: [true, "You must give one correct option"]
     }
 });
 
 const Question = mongoose.model("Question", questionsSchema);
 
-// Export model
 module.exports = Question;
