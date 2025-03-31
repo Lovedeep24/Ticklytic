@@ -14,7 +14,7 @@ const deleteTest=async(req,res)=>{
                 res.status(404).json("No test Found");
             }
         else{
-            await findByIdAndDelete(test);
+            await findByIdAndDelete(testId);
             res.status(200).json({
                 status: "Test Deleted Successfully"
             });    
