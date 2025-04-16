@@ -2,7 +2,8 @@ const Test=require('../models/testSchema');
 const { findByIdAndDelete } = require('../models/testSubmissionSchema');
 
 const deleteTest=async(req,res)=>{
-    const testId = req.body;
+    const testId = req.body.testId;
+    console.log(testId);
     if(!testId)
     {
         res.status(401).json("No test Id");
@@ -14,7 +15,7 @@ const deleteTest=async(req,res)=>{
                 res.status(404).json("No test Found");
             }
         else{
-            await findByIdAndDelete(testId);
+            await Test.findByIdAndDelete(testId);
             res.status(200).json({
                 status: "Test Deleted Successfully"
             });    
