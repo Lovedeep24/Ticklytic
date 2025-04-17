@@ -1,22 +1,17 @@
 const TestSubmission = require('../models/testSubmissionSchema'); // Adjust the path as necessary
 const submitTest = async (req, res) => {
   try {
-    const { testId, score, totalQuestions,userId } = req.body;
-    if (score < 0 || score > totalQuestions) {
-      return res.status(400).json({ message: 'Invalid score' });
-    }
+    const { testId, score, userId } = req.body;
     
-    if (!score || !totalQuestions || !userId || !testId) {  
+    if (!score || !userId || !testId) {  
       if (!score) {
-        return res.status(400).json({ message: 'score is mandatory' });
-      } else if (!totalQuestions) {
-        return res.status(400).json({ message: 'totalQuestions is mandatory' });
+        return res.status(300).json({ message: 'score is mandatory' });
       } else if (!userId) {
-        return res.status(400).json({ message: 'userId is mandatory' });
+        return res.status(302).json({ message: 'userId is mandatory' });
       }  else if (!testId) {
-        return res.status(400).json({ message: 'testId is mandatory' });
+        return res.status(303).json({ message: 'testId is mandatory' });
       } else {
-        return res.status(400).json({ message: 'All fields are mandatory' });
+        return res.status(309).json({ message: 'All fields are mandatory' });
       }
     }
     
@@ -24,7 +19,6 @@ const submitTest = async (req, res) => {
       userId,
       testId,
       score,
-      totalQuestions,
     });
 
     await newSubmission.save();
