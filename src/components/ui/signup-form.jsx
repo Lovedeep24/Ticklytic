@@ -1,7 +1,5 @@
 "use client";
 import React from "react";
-// import { Label } from "@/components/ui/label";
-// import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +9,6 @@ import {
   IconBrandGoogle
 } from "@tabler/icons-react";
 import { useState } from "react";
-// import LoginDrawer from "@/components/loginDrawer/LoginDrawer"
-// import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -86,29 +81,32 @@ const [errors, setErrors] = useState({
      
   
   return (
-    (<div 
-    className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <form className="" onSubmit={handleSubmit}>
+    <div 
+    className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white ">
+      <form className=" border-2 p-4" onSubmit={handleSubmit}>
         <div
-          className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-          <LabelInputContainer>
+          className=" flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
+          <LabelInputContainer className={"w-full text-start"}>
             <Label htmlFor="firstname">First name</Label>
             <Input id="firstname" placeholder="Tyler" type="text" className={errors.firstname ? "border-red-500" : ""} value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
           </LabelInputContainer>
-          <LabelInputContainer>
+          <LabelInputContainer className={"w-full text-start"}>
             <Label htmlFor="lastname">Last name</Label>
             <Input id="lastname" placeholder="Durden" type="text" value={lastname}  className={errors.lastname ? "border-red-500" : ""} onChange={(e)=>setLastname(e.target.value)} />
           </LabelInputContainer>
         </div>
-        <LabelInputContainer className="mb-4">
+        <LabelInputContainer className={"w-full text-start mb-4"}>
           <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
+          <Input id="email" placeholder="projectmayhem@ticklytic.com" type="email" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
+          <p className=" text-xs text-muted-foreground" role="region" aria-live="polite">
+        We won&lsquo;t share your email with anyone
+      </p>
         </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
+        <LabelInputContainer className={"w-full text-start mb-4"}>
           <Label htmlFor="password">Password</Label>
           <Input id="password" placeholder="••••••••" type="password" value={password}  className={errors.password ? "border-red-500" : ""} onChange={(e)=>setPassword(e.target.value)} />
         </LabelInputContainer>
-        <LabelInputContainer className="mb-8">
+        <LabelInputContainer className={"w-full text-start mb-4"}>
           <Label htmlFor="confirmpassword">confirm password</Label>
           <Input id="confirmpassword" placeholder="••••••••" type="confirmpassword" value={confirmPassword}  className={errors.confirmPassword ? "border-red-500" : ""} onChange={(e)=>setConfirmPassword(e.target.value)} />
         </LabelInputContainer>
@@ -144,7 +142,7 @@ const [errors, setErrors] = useState({
         </div>
       </form>
      
-    </div>)
+    </div>
   );
 }
 

@@ -12,11 +12,8 @@ export default function Signup() {
   return (
  <div>
   <div className="flex items-center justify-center fixed inset-0 w-full h-full  bg-gray-200">
-      <div className="h-[40rem]flex items-center justify-center">
       <SignupForm />
-     </div>
     </div>
-
     </div>
   )
 }
