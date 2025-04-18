@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { SlidingNumber } from '@/components/ui/sliding-number';
 import AlertDailogBox from './AlertDailogBox';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 export default function Test() {
     const [questions, setQuestions] = useState([]);
@@ -20,13 +21,13 @@ export default function Test() {
   
     const token = localStorage.getItem("accessToken");
     const decodedToken = jwtDecode(token);
-    const email=decodedToken.user.email;
     const fetchQuestions = async () => { 
       if (!token) {
         alert("Unauthorized access. Please login.");
         window.location.href = "/login";
         return;
       }
+
       try {
         const response = await fetch(`http://localhost:9000/tests/${testId}/questions`,{
           headers: {
@@ -37,6 +38,7 @@ export default function Test() {
 
         const data = await response.json();
         if (data.status === "success") {
+          console.log(data.data.questions);
           setTestName(data.data.testName);
           setQuestions(data.data.questions);
         } else {
@@ -71,9 +73,6 @@ export default function Test() {
       };
     }, []);
 
-  
-    const totalQuestions=questions.length;  
-    console.log("Total Questions:", totalQuestions);
 
     const handleAnswerChange = (questionId,option) => {
       setUserAnswer((previousAnswer)=>({
@@ -85,36 +84,36 @@ export default function Test() {
     const handleSubmit =async () => {
       let correctCount = 0;
       questions.forEach((question) => {
+
         if (userAnswer[question._id] === question.correctOption) {
           correctCount += 1;
         }
       });
-      console.log(correctCount);
       setScore(correctCount);
+      console.log(score);
       const userId = localStorage.getItem("userId");
       try {
         const response= await axios.post("http://localhost:9000/submitTest",
           {
             testId,
             userId,
-            totalQuestions,
             score,
           }
         );
         if(response.status===201){
-          alert("Test submitted successfully!");
-          // navigate("/result"); 
+          setIsOpen(true);
         }
       } catch (error) {
+        toast.error("Failed to Submit Test! try again")
         console.error("Error:", error.message);
       }
     };
   return (
     <div className='border-2 border-red-700 w-screen h-screen m-0 p-0'>
-      <div className='flex flex-col items-center justify-center'>
+      <div className='flex flex-col bg-[#161D29] items-center justify-center'>
         <div className='flex justify-between w-[70%]'>
-          <a>Logo</a>
-          <h1 className='text-5xl'>{testName}</h1>
+          <a className='text-white'>Logo</a>
+          <h1 className='text-5xl text-white'>{testName}</h1>
         </div>
       </div>
       
@@ -127,20 +126,20 @@ export default function Test() {
             <div className='border-2 border-blue-950 flex flex-col p-4 gap-5 w-full'>
               {questions.map((question, index) => (
                 <div key={question._id} className='w-full border-b-2 gap-2 flex flex-col items-start justify-start'>
-                  <p className='text-3xl'>{question.questionText}</p>
+                  <p className='text-3xl text-[#161D29]'>{question.questionText}</p>
                   <ul>
                     {question.options.map((option, optionIndex) => (
                       <li className='text-2xl p-2' key={`${question._id}-${optionIndex}`}>
-                        <label className='flex gap-3'>
+                        <lable className='flex gap-3'>
                           <input
                             type="radio"
                             name={`question-${question._id}`}
-                            checked={userAnswer[question._id] === option}
+                            checked={userAnswer[question._id] === optionIndex}
                             value={option}
-                            onChange={() => handleAnswerChange(question._id, option)}
+                            onChange={() => handleAnswerChange(question._id, optionIndex)}
                           />
                           {option}
-                        </label>
+                        </lable>
                       </li>
                     ))}
                   </ul>
@@ -149,7 +148,7 @@ export default function Test() {
             </div>
 
           <div className='border-2 border-black flex px-8 w-[70%] justify-between items-center'>
-          <Button className="relative " onClick={() => setIsOpen(true)} >
+          <Button className="relative " onClick={() => handleSubmit()  }>
   Submit Test
 </Button>
 
@@ -159,29 +158,20 @@ export default function Test() {
         )}
     </div>
     {isOpen && <AlertDailogBox isOpen={isOpen} setIsOpen={setIsOpen} /> }
-          <div className='flex flex-col w-[25%] items-center justify-center h-full border-2 border-yellow-500'>
-            {/* <div className='w-[50%] h-[20%] '>
-              <div className='flex items-center gap-0.5 font-mono'>
-                <SlidingNumber value={minutes} padStart={true} />
-                <span className='text-zinc-500'>:</span>
-                <SlidingNumber value={seconds} padStart={true} />
-              </div>
-            </div> */}
+          <div className='flex flex-col w-[25%] items-center  justify-center h-full border-2 border-yellow-500'>
+          
             <div className='w-[80%] h-[40%]'>
             <video
                         ref={videoRef}
                         autoPlay
                         playsInline
                         muted
-                        className=" border-2 rounded-3xl mb-4"
+                        className=" border-2 rounded-3xl mb-4 transform -scale-x-100"
                     />
             </div>
       
           </div>
       </div>
-   
-    
-
 
   </div>
   )

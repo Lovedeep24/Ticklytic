@@ -20,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const features = [
   {
@@ -36,7 +36,7 @@ const features = [
     Icon: InputIcon,
     name: "View All Tests",
     description: "Search through all your files in one place.",
-    href: "/tests",
+    href: "/testCluster",
     cta: "Learn more",
     background: <img className="absolute -right-20 -top-20 opacity-60" />,
     className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-3",

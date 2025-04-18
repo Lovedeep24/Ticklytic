@@ -16,6 +16,7 @@ import AddQuestion from './pages/AddQuestion';
 import Submissions from './pages/Submissions';
 import TestCluster from './pages/TestCluster';
 import CreateTest from './pages/CreateTest';
+import AdminTestPage from './pages/AdminTestPage';
 function App() {
 
   return (
@@ -31,10 +32,10 @@ function App() {
           <Route path="/addquestions" element={<AddQuestion />} />
           <Route path="/submissions" element={<Submissions />} />
           <Route path="/createTest" element={<CreateTest/>} />
-
-            <Route path="/result" element={<Results />} />
-            <Route path="/test/:testId" element={<Test />} />
-            <Route path="/tests" element={<TestCluster />} />
+          <Route path="/testCluster" element={<AdminTestPage/>} />
+          <Route path="/result" element={<Results />} />
+          <Route path="/test/:testId" element={<Test />} />
+          <Route path="/tests" element={<TestCluster />} />
      
         </Routes>
       </Router>

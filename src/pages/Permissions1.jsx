@@ -9,8 +9,8 @@ import { Toaster } from "@/components/ui/sonner";
 export default function Permissions() {
   const [video, setVideo] = useState(false);
   const [audio, setAudio] = useState(false);
-  const [screenShare, setScreenShare] = useState(false);
-  const [canHear, setCanHear] = useState(false);
+  // const [screenShare, setScreenShare] = useState(false);
+  // const [canHear, setCanHear] = useState(false);
   const videoRef = useRef(null);
   const navigate = useNavigate();
   const videoPermission = async () => {
@@ -36,18 +36,18 @@ export default function Permissions() {
     }
   };
 
-  const screenSharing = async () => {
-    try {
-      const screenShare = await navigator.mediaDevices.getDisplayMedia({ video: true });
-      setScreenShare(true);
-      toast.success("Screen Share Started");
-    } catch (error) {
-      toast.error("Screen Sharing is not Available");
-      console.log(error);
-    }
-  };
+  // const screenSharing = async () => {
+  //   try {
+  //     const screenShare = await navigator.mediaDevices.getDisplayMedia({ video: true });
+  //     setScreenShare(true);
+  //     toast.success("Screen Share Started");
+  //   } catch (error) {
+  //     toast.error("Screen Sharing is not Available");
+  //     console.log(error);
+  //   }
+  // };
 
-  const allPermissionsGranted = video && audio && screenShare;
+  const allPermissionsGranted = video && audio;
 
 
   const handleTest=async()=>{
@@ -63,7 +63,7 @@ export default function Permissions() {
           autoPlay
           playsInline
           muted
-          className="w-full h-auto object-cover border-white border-2 rounded-3xl"
+          className="w-full h-auto object-cover border-white border-2 rounded-3xl transform -scale-x-100"
         />
       </div>
 
@@ -101,7 +101,7 @@ export default function Permissions() {
         </div>
 
        
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
+        {/* <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
           <ComputerDesktopIcon className="w-8 h-8 text-white" />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Enable Screen Share</span>
@@ -112,17 +112,17 @@ export default function Permissions() {
               className="w-8 h-8 ml-auto"
             />
           </div>
-        </div>
+        </div> */}
 
 
         <div className="w-11/12 p-2 items-center">
           <div onClick={()=>handleTest()}
-            className={`w-full block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
+            className={`w-full cursor-pointer block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
               allPermissionsGranted? "bg-purple-700 text-white hover:bg-purple-900"
                 : "bg-gray-500 text-gray-300 cursor-not-allowed"
             }`}
           >
-            Process to Test
+            Proceed to Test
           </div>
         </div>
       </div>

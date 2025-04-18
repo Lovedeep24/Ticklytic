@@ -1,7 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { 
+  Sidebar,
+  SidebarProvider,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarFooter,
+  SidebarTrigger,
+} from "@/components/sidebar";
+
+import { 
+  User,
+  ChevronsUpDown,
+  Calendar,
+  Home,
+  Inbox,
+  Search,
+  Settings 
+} from "lucide-react"
 import axios from 'axios';
 export default function Submissions() {
+  const items = [
+    {
+      title: "Home",
+      url: "#",
+      icon: Home,
+    },
+    {
+      title: "Inbox",
+      url: "#",
+      icon: Inbox,
+    },
+    {
+      title: "Calendar",
+      url: "#",
+      icon: Calendar,
+    },
+    {
+      title: "Search",
+      url: "#",
+      icon: Search,
+    },
+    {
+      title: "Settings",
+      url: "#",
+      icon: Settings,
+    },
+  ]
+  
   const [submissions, setSubmissions] = useState([]);
     const [error, setError] = useState('');
 
@@ -20,24 +71,55 @@ export default function Submissions() {
     }, []);
   return (
     <div className="bg-white text-black font-sans p-5 rounded-lg shadow-md w-4/5 mx-auto">
-      <Link to="/admin" className="text-black no-underline text-base mr-4 hover:text-gray-800">Admin Home</Link>
-      <br />
-      <Link to="/" className="text-black no-underline text-base mr-4 hover:text-gray-800">Home</Link>
-      <h1 className="text-black text-center text-2xl mb-5">Submissions</h1>
-      {error && <h2 className="text-red-500 text-center text-lg mt-5">{error}</h2>}
-      <ul className="list-none p-0">
-        {submissions.map((submission, index) => (
-          <li key={index} className="bg-gray-200 border border-gray-300 mb-4 p-4 rounded-md">
-            <p className="text-base my-1">Submitted By: {submission.email}</p>
-            <p className="text-base my-1">Score: {submission.finalScore}</p>
-            <p className="text-base my-1">Submission Date: {submission.updatedAt}</p>
-            <p className="text-base my-1">
-              Result Out: <span className={submission.status ? '' : 'text-red-500'}>{submission.status ? "Yes" : "No"}</span>
-            </p>
-            <hr className="mt-4 border-t border-gray-300" />
-          </li>
-        ))}
-      </ul>
+      {/* <SidebarProvider>
+      <Sidebar>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>Application</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild tooltip={item.title}>
+                      <a href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        <SidebarFooter>
+          <SidebarGroup>
+            <SidebarMenuButton className="w-full justify-between gap-3 h-12">
+              <div className="flex items-center gap-2">
+                <User className="h-5 w-5 rounded-md" />
+                <div className="flex flex-col items-start">
+                  <span className="text-sm font-medium">John Doe</span>
+                  <span className="text-xs text-muted-foreground">john@example.com</span>
+                </div>
+              </div>
+              <ChevronsUpDown className="h-5 w-5 rounded-md" />
+            </SidebarMenuButton>
+          </SidebarGroup>
+        </SidebarFooter>
+      </Sidebar>
+
+      <main className="flex-1 min-w-100vh">
+        <div className="px-4 py-2">
+          <SidebarTrigger className="h-4 w-4 mt-2" />
+        </div>
+        <div className="p-6">
+          <h1 className="text-2xl font-bold">Main Content</h1>
+          <p className="mt-2">This is the main content area of the page.</p>
+        </div>
+      </main>
+    </SidebarProvider> */}
+
     </div>
   )
 }

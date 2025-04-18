@@ -2,15 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { ProjectStatusCard } from "@/components/ui/expandable-card"
-// const token = localStorage.getItem('token')
-// const[testName,setTestName]=useState("");
-// const[testDescription,setTestDescription]=useState("");
-// const[createdOn,setCreatedOn]=useState("");
 
 import { cn } from "@/lib/utils";
 import {
     CheckCircle,
-    TrendingUp,
 } from "lucide-react";
 
 export default function TestCluster() {
@@ -129,7 +124,7 @@ export default function TestCluster() {
   
   
   return (
-    <div className='bg-black w-full h-screen m-0 p-0'>
+    <div className='bg-black w-full m-0 p-0'>
     <h1 className="text-white text-4xl">Test Cluster</h1>
  
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">

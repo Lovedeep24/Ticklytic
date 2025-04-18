@@ -91,7 +91,8 @@ function Test() {
   };
   return (
     <>
-      <h1>{testName}</h1>
+    <div className='w-full border-2 bg-[#161D29]'><h1>{testName}</h1></div>
+      
       <div>
         {questions.length === 0 ? (
           <p>No questions available in the test</p>

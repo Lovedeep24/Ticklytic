@@ -3,18 +3,18 @@ const { CronJob } = require('cron');
 const connectToMongoDb = require('./config/db');
 const TestSubmission = require('./models/testSubmissionSchema');
 
-// Create a transport for sending emails using Gmail
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'lovedeepbidhan0@gmail.com',
-    pass: 'elvc wrvn dlnp pikg' // Replace with your Gmail password or app password
+    pass: 'elvc wrvn dlnp pikg'
   }
 });
 
 const sendEmail = async (email, subject, text) => {
   const mailOptions = {
-    from: 'lovedeepbidhan0@gmail.com', // Replace with your Gmail address
+    from: 'lovedeepbidhan0@gmail.com', 
     to: email,
     subject: subject,
     text: text
@@ -30,22 +30,20 @@ const sendEmail = async (email, subject, text) => {
 
 const sendTestResultsEmails = async () => {
   try {
-    // Connect to MongoDB
     await connectToMongoDb();
-
-    const submissions = await TestSubmission.find({ status: false });
+    const submissions = await TestSubmission.find({ status: false })
+    .populate('testId')
+    .populate('userId');
     console.log(`Found ${submissions.length} test submissions with status false`);
-
-
-    // Send email for each submission
-    for (const submission of submissions) {
+    console.log(submissions);
+   
+    for (const submission of submissions) 
+    {
       const subject = 'Your Test Results';
-      const text = `Hello,\n\nThank you for taking the test. Your final score is ${submission.finalScore} out of ${submission.totalQuestions}.\n\nBest regards,\nThe Test Team Ticklytic.`;
-      await sendEmail(submission.email, subject, text);
-      
+      const text = `Hello,\n\nThank you for taking the test. Your final score for test ${submission.testId.testName} is ${submission.score} out of ${submission.testId.questions.length}.\n\nBest regards,\n Team Ticklytic.`;
+      await sendEmail(submission.userId.email, subject, text);  
       submission.status = true;
       await submission.save();
-    
     }
 
     console.log('All emails sent successfully');
@@ -55,13 +53,13 @@ const sendTestResultsEmails = async () => {
  
 };
 
-// Create and start the cron job
+
 const cronJob = new CronJob(
   '0 * * * *', 
   sendTestResultsEmails,
   null,
-  true, // Start the job right now
-  'Asia/Kolkata' // Indian time zone
+  true,
+  'Asia/Kolkata' 
 );
 
 module.exports = cronJob,transporter;
