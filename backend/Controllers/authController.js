@@ -1,6 +1,7 @@
 const Signup=require("../models/SignupModel");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
+const { toast } = require("sonner");
 
 //LOGIN
 const login=async(req,res)=>{
@@ -55,7 +56,7 @@ const login=async(req,res)=>{
 const signup=async(req,res)=>{
     const {name,email,password}=req.body;
     const hashedPassword=await bcrypt.hash(password,10);
-    console.log(hashedPassoword);
+    // console.log(hashedPassoword);
     if(!name || !email || !password )
     {
        return res.status(404).json("All fields are mandatory");
@@ -81,10 +82,12 @@ const signup=async(req,res)=>{
                console.log("user created");
                
                res.status(200).json("user has been created successfully");
+               toast.success("Account created successfully");
             }
     } 
     catch (error) 
     {
+        toast.error("Something went wrong. Please try again later.");
         res.status(500).json("Internal Server Error");
     }
    

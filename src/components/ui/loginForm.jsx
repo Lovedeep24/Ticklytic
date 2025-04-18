@@ -83,11 +83,11 @@ const [errors, setErrors] = useState({
     (<div 
     className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
       <form className="" onSubmit={handleLogin}>
-        <LabelInputContainer className="mb-4">
+        <LabelInputContainer className="mb-4 text-start">
           <Label htmlFor="email">Email Address</Label>
           <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
         </LabelInputContainer>
-        <LabelInputContainer className="mb-4">
+        <LabelInputContainer className="mb-4  text-start ">
           <Label htmlFor="password">Password</Label>
           <Input id="password" placeholder="••••••••" type="password" value={password}  className={errors.password ? "border-red-500" : ""} onChange={(e)=>setPassword(e.target.value)} />
         </LabelInputContainer>
@@ -142,11 +142,11 @@ const [errors, setErrors] = useState({
             </button>
           </div>
           <div className="flex items-center justify-center h-[100%]">
-            <p> Don't have an account? 
+            <p> Don't have an account?  
             <span 
               className="font-bold cursor-pointer text-black-600 hover:underline"
-              onClick={() => navigate("/tests")}>
-            Signup
+              onClick={() => navigate("/signup")}>
+             Signup
             </span>
               </p>
           </div>

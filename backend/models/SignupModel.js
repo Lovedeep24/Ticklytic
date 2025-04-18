@@ -19,13 +19,16 @@ const SignupSchema = mongoose.Schema({
         required: [true, "Please enter Role"],
         default: "User" 
     },
-   testHistory:
-   {
-         type: [{type:mongoose.Schema.Types.ObjectId,ref:"TestHistory"}]
-   }
-}, {
+    testHistory: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Tests"
+        }
+      ]
+    },
+    {
     timestamps: true  
-});
+    });
 
 const User = mongoose.model("User", SignupSchema);
 module.exports = User;

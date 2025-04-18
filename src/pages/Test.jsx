@@ -14,7 +14,7 @@ export default function Test() {
     const [testName, setTestName] = useState('');
     const [isOpen , setIsOpen] = useState(false);
     const [userAnswer,setUserAnswer] = useState({});
-    const [score, setScore] = useState(null);
+    const [score, setScore] = useState();
     const { testId } = useParams();
     const videoRef = useRef(null);
     const streamRef = useRef(null);
@@ -27,7 +27,7 @@ export default function Test() {
         window.location.href = "/login";
         return;
       }
-
+   
       try {
         const response = await fetch(`http://localhost:9000/tests/${testId}/questions`,{
           headers: {
@@ -84,7 +84,6 @@ export default function Test() {
     const handleSubmit =async () => {
       let correctCount = 0;
       questions.forEach((question) => {
-
         if (userAnswer[question._id] === question.correctOption) {
           correctCount += 1;
         }
@@ -92,15 +91,16 @@ export default function Test() {
       setScore(correctCount);
       console.log(score);
       const userId = localStorage.getItem("userId");
+  
       try {
         const response= await axios.post("http://localhost:9000/submitTest",
           {
+            score,
             testId,
             userId,
-            score,
           }
         );
-        if(response.status===201){
+        if(response.status===200){
           setIsOpen(true);
         }
       } catch (error) {
