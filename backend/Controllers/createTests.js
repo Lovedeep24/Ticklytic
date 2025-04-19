@@ -8,12 +8,13 @@ const tests = async(req,res)=>{
     try {
         if(!testName || !description || !duration)
         {
-            return res.status(401).json({status: "failed", message: "Please provide all Fields"});
+            return res.status(400).json({status: "failed", message: "Please provide all Fields"});
         }
         const testExist = await Test.findOne({testName});
         if(testExist)
         {
-            res.status(409).json("Test already Exist with this name");
+            return res.status(409).json("Test already Exist with this name");
+           
         }
         else{
             const newTest= await Test.create(
