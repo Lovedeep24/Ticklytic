@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
-// import { useState } from "react"
 import axios from "axios";
-// import { useState, useMemo } from "react";
-// import { Pencil, Trash2 } from "lucide-react";
 import AlertDialogBox from '@/components/alertDialog/AlertDialog';
 import AddQuestionsComp from './AddQuestionsComp';
 import { Trash2 , SquarePen} from "lucide-react"
@@ -18,10 +15,9 @@ import {
   TableRow,
 } from "@/components/ui/tableUser"
 import { useMemo, useState } from "react"
-import { useNavigate } from "react-router-dom";
-
 export default function AdminTestPage() {
   const [tests, setTests] = useState([]);
+  const [opneAddQuestion, setOpenAddQuestion] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const[isLoading,setIsLoading]=useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,9 +25,6 @@ export default function AdminTestPage() {
   const [sortDirection, setSortDirection] = useState("asc");
   const [testId,setTestId] = useState("");
   
-
-  const navigate = useNavigate();
-
 const filteredTests = useMemo(() => {
   return tests.filter((test) =>
     test.testName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -55,9 +48,6 @@ const handleSort = (column) => {
   }
 };
 const fetchTests = async () => {
-  // const token = localStorage.getItem("authToken");
-//   if (!token) return;
-
   try {
     const response = await axios.get("http://localhost:9000/tests");
     console.log(response.data.data);
@@ -184,19 +174,24 @@ return (
                 year: "numeric",
               })}
           </TableCell>
+
           <TableCell className=" cursor-pointer flex gap-2">  
-          <Button variant="ghost" size="icon" className="cursor-pointer">
-            <Trash2 onClick={() =>{ setTestId(test._id); setIsAlertOpen(true)} }className="size-4 " />
-          </Button>
-          <Button variant="ghost" size="icon" className="cursor-pointer "  title="Add Question">
-            <SquarePen onClick={() =>{ localStorage.setItem("testId",test._id); navigate("/addquestions"); } }className="size-4 " />
-          </Button>
+              <Button variant="ghost" size="icon" className="cursor-pointer" 
+              onClick={() =>{ setTestId(test._id); setIsAlertOpen(true)} }>
+                <Trash2 className="size-4 " />
+              </Button>
+
+              <Button variant="ghost" size="icon" className="cursor-pointer"  title="Add Question" 
+              onClick={() =>{  setTestId(test._id); setOpenAddQuestion(true)}}>
+                <SquarePen className="size-4" />
+              </Button>
           </TableCell>
         </TableRow>
       ))}
     </TableBody>
   </Table>
-  {isAlertOpen && <AlertDialogBox fetchTests={fetchTests} testId={testId} isOpen={isAlertOpen} setIsOpen={setIsAlertOpen} />}
+  {isAlertOpen && <AlertDialogBox  open={isAlertOpen} setOpen={setIsAlertOpen} testId={testId} fetchTests={fetchTests}/>}
+  {opneAddQuestion && <AddQuestionsComp open={opneAddQuestion} setOpen={setOpenAddQuestion} testId={testId} fetchTests={fetchTests}/>}
 </div>}
 </div>
  )

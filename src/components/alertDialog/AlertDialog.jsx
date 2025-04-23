@@ -14,7 +14,7 @@ import {
   import { Trash2 } from "lucide-react";
 import axios from 'axios';
 import { toast } from 'sonner';
-export default function AlertDialogBox({fetchTests, isOpen, setIsOpen ,testId}) {
+export default function AlertDialogBox({ open, setOpen ,testId, fetchTests}) {
 
   const handleDeleteTest = async()=>{
     console.log(testId)
@@ -34,7 +34,7 @@ export default function AlertDialogBox({fetchTests, isOpen, setIsOpen ,testId}) 
     }
   }
 return (
-    <AlertDialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
+    <AlertDialog open={open} onOpenChange={(open) => setOpen(open)}>
       <AlertDialogContent>
         <AlertDialogHeader className="mb-4 items-center gap-2 md:flex-row md:items-start md:gap-4">
           <div

@@ -49,7 +49,7 @@ export default function TestCluster() {
       navigate("/permissions");
     }
   return (
-    <div className='bg-black h-screen w-full m-0 p-0'>
+    <div className='bg-black min-h-screen w-full m-0 p-0'>
     <h1 className="text-white text-4xl">Test Cluster</h1>
  
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">
@@ -58,7 +58,7 @@ export default function TestCluster() {
                    const createdAt = test.createdAt;
                   const date = new Date(createdAt).toLocaleDateString("en-US", {
                       day: "2-digit",
-                      month: "short", // "Nov"
+                      month: "short", 
                       year: "numeric"
                   });
                   return (
@@ -120,12 +120,11 @@ export default function TestCluster() {
                                         </span>
                                 </div>
                                 <span
-                                    className="text-xs text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    {test.cta || "Take Test →"}
+                                    className="text-xs text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                    Take Test →
                                 </span>
                             </div>
                         </div>
-    
                         <div
                             className={`absolute inset-0 -z-10 rounded-xl p-px bg-gradient-to-br from-transparent via-gray-100/50 to-transparent dark:via-white/10 ${
                                 test.hasPersistentHover
@@ -135,21 +134,6 @@ export default function TestCluster() {
                     </div>
                 )})}
             </div>
-        
-    {/* <div className="grid gap-4 md:grid-cols-2"> */}
-    {/* <BentoGrid items={itemsSample} /> */}
-    {/* {Array.isArray(tests) && tests.length > 0 ? (
-  tests.map((test) => (
-    <div key={test._id} className="justify-center items-center border-2" onClick={() => handleTestClick(test._id)}>
-    <h2>{test.testName}</h2>
-    <p>{test.description}</p>
-    <p>Created on: {new Date(test.createdAt).toLocaleString()}</p>
-      </div> 
-        ))
-      ) : (
-        <p>No tests available</p>
-      )}  */}
-  {/* </div> */}
   </div>
   )
 }

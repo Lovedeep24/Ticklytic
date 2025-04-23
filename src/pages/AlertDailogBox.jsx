@@ -8,11 +8,13 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
+
+  import { useNavigate } from 'react-router-dom'
 
 export default function AlertDailogBox({ isOpen, setIsOpen }) {
+  const navigate = useNavigate();
+
   return (
    <AlertDialog open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <AlertDialogContent>
@@ -23,9 +25,12 @@ export default function AlertDailogBox({ isOpen, setIsOpen }) {
           Please check your inbox (and spam folder) for the results
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogAction>Home Page</AlertDialogAction>
-        </AlertDialogFooter>
+        <>
+        <AlertDialogAction onClick={() => navigate("/")}>
+          Home Page
+        </AlertDialogAction>
+        </>
+        
       </AlertDialogContent>
     </AlertDialog>
   )

@@ -25,8 +25,9 @@ import { CircleUserRound } from "lucide-react";
 export default function CreateTest() {
   const [testName,setTestName]=useState('');
   const [description,setDescription]=useState('');
+  const [testId,setTestId]=useState('');  
   const [duration,setDuration]=useState(0);
-  const [addQuestions,setAddQuestions]= useState(false);
+  const [openQuestionDialog,setOpenQuestionDialog]= useState(false);
   const id = useId();
   const maxLength = 50;
   const {
@@ -59,20 +60,26 @@ export default function CreateTest() {
               duration,
           }); 
           if (response.status === 200) {
-            localStorage.setItem("testId",response.data.testId);
-            setAddQuestions(true);
+            setTestId(response.data.testId);
+            console.log(testId);
             toast.success("Test Created successfull");
-            console.log(response);
-          }else if(response.status === 409){
-            toast.error("Test with same name already exist!");
-         }
+            setOpenQuestionDialog(true);
+            setTestName('');
+            setDescription('');
+            setDuration(0);
+
+          }
           else{
             toast.error("Test not created");
             console.log(response);
           }
       } catch (error) {
-        toast.error("Something went wrong");
-        console.error(error);        
+        if (axios.isAxiosError(error) && error.response?.status === 409) {
+          toast.error("Test with same name already exists!");
+        } else {
+          toast.error("Something went wrong");
+          console.error(error);
+        }
       }
   }
   
@@ -146,13 +153,12 @@ export default function CreateTest() {
       </div>
        
        <div className=" border-2">
-     {/* <button onClick={handleCreation} className="h-20 w-40 p-3 m-2 border-none rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-700 focus:outline-none">Create Test</button> */}
      <InteractiveHoverButton onClick={handleCreation} />
    </div>
    </div>
    <Toaster richColors position="top-center" />
-   {addQuestions &&  <AddQuestionsComp/>}    
+    <AddQuestionsComp open={openQuestionDialog} setOpen={setOpenQuestionDialog} testId={testId} />
   </div>
-  </>
+ </>
   )
 }

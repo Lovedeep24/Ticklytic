@@ -85,17 +85,14 @@ export default function Test() {
       let correctCount = 0;
       questions.forEach((question) => {
         if (userAnswer[question._id] === question.correctOption) {
-          correctCount += 1;
+          correctCount = correctCount+1;
         }
       });
-      setScore(correctCount);
-      console.log(score);
       const userId = localStorage.getItem("userId");
-  
       try {
         const response= await axios.post("http://localhost:9000/submitTest",
           {
-            score,
+            score:correctCount,
             testId,
             userId,
           }
@@ -159,7 +156,6 @@ export default function Test() {
     </div>
     {isOpen && <AlertDailogBox isOpen={isOpen} setIsOpen={setIsOpen} /> }
           <div className='flex flex-col w-[25%] items-center  justify-center h-full border-2 border-yellow-500'>
-          
             <div className='w-[80%] h-[40%]'>
             <video
                         ref={videoRef}
