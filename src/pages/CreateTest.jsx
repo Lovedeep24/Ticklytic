@@ -6,13 +6,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// import { CircleUserRound } from "lucide-react";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import AddQuestionsComp from './AddQuestionsComp';
 import { useCharacterLimit } from "@/hooks/use-character-limit";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
 import { useId } from "react";
-// import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -66,15 +63,16 @@ export default function CreateTest() {
             setAddQuestions(true);
             toast.success("Test Created successfull");
             console.log(response);
-          }
-          else if(response.status === 401){
-             toast.error("Please Provide Test Name and Desc.");
-          } else if(response.status === 409){
+          }else if(response.status === 409){
             toast.error("Test with same name already exist!");
          }
+          else{
+            toast.error("Test not created");
+            console.log(response);
+          }
       } catch (error) {
         toast.error("Something went wrong");
-          console.error(error);
+        console.error(error);        
       }
   }
   
@@ -148,7 +146,8 @@ export default function CreateTest() {
       </div>
        
        <div className=" border-2">
-     <button onClick={handleCreation} className="h-20 w-40 p-3 m-2 border-none rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-700 focus:outline-none">Create Test</button>
+     {/* <button onClick={handleCreation} className="h-20 w-40 p-3 m-2 border-none rounded-md bg-blue-500 text-white cursor-pointer transition duration-300 hover:bg-blue-700 focus:outline-none">Create Test</button> */}
+     <InteractiveHoverButton onClick={handleCreation} />
    </div>
    </div>
    <Toaster richColors position="top-center" />

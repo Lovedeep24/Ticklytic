@@ -3,8 +3,7 @@ import './App.css'
 // import Login2 from './pages2/Login2'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { MediaStreamProvider } from "./Context/MediaStreamContext";
-// import {MediaStreamProvider} from './'
-// import ProtectedRoute from './ProtectedRoute';
+
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -12,11 +11,12 @@ import Test from './pages/Test';
 import Results from './pages/Results';
 import Permissions from './pages/Permissions1';
 import AdminPortal from './pages/AdminPortal';
-import AddQuestion from './pages/AddQuestion';
+import AddQuestion from './pages/AddQuestionsComp';
 import Submissions from './pages/Submissions';
 import TestCluster from './pages/TestCluster';
 import CreateTest from './pages/CreateTest';
 import AdminTestPage from './pages/AdminTestPage';
+import NotFound from './pages/NotFound';
 function App() {
 
   return (
@@ -36,7 +36,7 @@ function App() {
           <Route path="/result" element={<Results />} />
           <Route path="/test/:testId" element={<Test />} />
           <Route path="/tests" element={<TestCluster />} />
-     
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </MediaStreamProvider>

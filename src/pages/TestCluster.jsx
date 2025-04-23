@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { ProjectStatusCard } from "@/components/ui/expandable-card"
-
 import { cn } from "@/lib/utils";
 import {
     CheckCircle,
@@ -49,82 +47,9 @@ export default function TestCluster() {
     const handleTestClick=(id)=>{
       localStorage.setItem("testId",id);
       navigate("/permissions");
-      // const response=await get(`http://localhost:9000/tests/${id}/questions`,{
-      //   headers: {
-      //     'Authorization': `Bearer ${token}`,  
-      //     'Content-Type': 'application/json'
-      //   }
-      // });
     }
-    // const handleTestClick=(testId)=>{
-    //   Navigate(`/test/${testId}`);
-    // }
-//     const items = [
-//       {
-//           title: "Analytics Dashboard",
-//           meta: "v2.4.1",
-//           description:
-//               "Real-time metrics with AI-powered insights and predictive analytics",
-//           icon: <TrendingUp className="w-4 h-4 text-blue-500" />,
-//           status: "Created on: 20/5/24",
-//           tags: ["20 Ques", "15min", "Created on: 20/5/24"],
-//           colSpan: 2,
-//           hasPersistentHover: true,
-//       },
-//       {
-//           title: "Task Manager",
-//           meta: "84 completed",
-//           description: "Automated workflow management with priority scheduling",
-//           icon: ,
-//           status: "Updated",
-//           tags: ["Productivity", "Automation"],
-//       },
-//       {
-//           title: "Media Library",
-//           meta: "12GB used",
-//           description: "Cloud storage with intelligent content processing",
-//           icon: <TrendingUp className="w-4 h-4 text-purple-500" />,
-//           tags: ["Storage", "CDN"],
-//           colSpan: 2,
-//       },
-//       {
-//           title: "Global Network",
-//           meta: "6 regions",
-//           description: "Multi-region deployment with edge computing",
-//           icon: <TrendingUp className="w-4 h-4 text-sky-500" />,
-//           status: "Beta",
-//           tags: ["Infrastructure", "Edge"],
-//       },
-//       {
-//         title: "Global Network",
-//         meta: "6 regions",
-//         description: "Multi-region deployment with edge computing",
-//         icon: <TrendingUp className="w-4 h-4 text-sky-500" />,
-//         status: "Beta",
-//         tags: ["Infrastructure", "Edge"],
-//     },
-//     {
-//       title: "Global Network",
-//       meta: "6 regions",
-//       description: "Multi-region deployment with edge computing",
-//       icon: <TrendingUp className="w-4 h-4 text-sky-500" />,
-//       status: "Beta",
-//       tags: ["Infrastructure", "Edge"],
-//   },
-//   {
-//     title: "Global Network",
-//     meta: "6 regions",
-//     description: "Multi-region deployment with edge computing",
-//     icon: <TrendingUp className="w-4 h-4 text-sky-500" />,
-//     status: "Beta",
-//     tags: ["Infrastructure", "Edge"],
-// },
-
-//   ];
-  
-  
   return (
-    <div className='bg-black w-full m-0 p-0'>
+    <div className='bg-black h-screen w-full m-0 p-0'>
     <h1 className="text-white text-4xl">Test Cluster</h1>
  
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">

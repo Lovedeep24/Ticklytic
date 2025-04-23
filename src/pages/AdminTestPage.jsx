@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
 // import { useState } from "react"
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight} from "@fortawesome/free-solid-svg-icons";
 // import { useState, useMemo } from "react";
 // import { Pencil, Trash2 } from "lucide-react";
 import AlertDialogBox from '@/components/alertDialog/AlertDialog';
-import { Trash2 } from "lucide-react"
+import AddQuestionsComp from './AddQuestionsComp';
+import { Trash2 , SquarePen} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import {
@@ -19,17 +18,19 @@ import {
   TableRow,
 } from "@/components/ui/tableUser"
 import { useMemo, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export default function AdminTestPage() {
   const [tests, setTests] = useState([]);
-  const [userAttemptedTests, setUserAttemptedTests] = useState([]);
-  const [userTests, setuserTests] = useState([]);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const[isLoading,setIsLoading]=useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState("title");
   const [sortDirection, setSortDirection] = useState("asc");
   const [testId,setTestId] = useState("");
+  
+
+  const navigate = useNavigate();
 
 const filteredTests = useMemo(() => {
   return tests.filter((test) =>
@@ -112,9 +113,9 @@ return (
   </div>
   <Table>
     <TableHeader>
-      <TableRow>
+      <TableRow>  
         <TableHead
-          className="cursor-pointer"
+          className="cursor-pointer flex items-center justify-center"
           onClick={() => handleSort("testName")}
         >
           Test Name
@@ -125,7 +126,7 @@ return (
           )}
         </TableHead>
         <TableHead
-          className="cursor-pointer"
+          className="cursor-pointer "
           onClick={() => handleSort("testName")}
         >
           Description
@@ -136,34 +137,19 @@ return (
           )}
         </TableHead>
         <TableHead
-          className="cursor-pointer"
+          className="cursor-pointer border-2"
         >
-          No. of Ques
-          {/* {sortColumn === "createdAt" && (
-            <span className="ml-1">
-              {sortDirection === "asc" ? "\u2191" : "\u2193"}
-            </span>
-          )} */}
+          No. of Question
         </TableHead>
         <TableHead
           className="cursor-pointer"
         >
           Duration
-          {/* {sortColumn === "createdAt" && (
-            <span className="ml-1">
-              {sortDirection === "asc" ? "\u2191" : "\u2193"}
-            </span>
-          )} */}
         </TableHead>
         <TableHead
           className="cursor-pointer"
         >
           Max Score
-          {/* {sortColumn === "createdAt" && (
-            <span className="ml-1">
-              {sortDirection === "asc" ? "\u2191" : "\u2193"}
-            </span>
-          )} */}
         </TableHead>
         <TableHead
           className="cursor-pointer"
@@ -184,7 +170,7 @@ return (
     </TableHeader>
     <TableBody>
       {sortedTests.map((test) => (
-          <TableRow key={test._id || test.testName}>
+          <TableRow key={test._id}>
           <TableCell className="font-medium">{test.testName}</TableCell>
           <TableCell className="font-medium">{test.description}</TableCell>
           {/* <TableCell>{bookmark.description}</TableCell> */}
@@ -198,9 +184,12 @@ return (
                 year: "numeric",
               })}
           </TableCell>
-          <TableCell className=" cursor-pointer">  
+          <TableCell className=" cursor-pointer flex gap-2">  
           <Button variant="ghost" size="icon" className="cursor-pointer">
             <Trash2 onClick={() =>{ setTestId(test._id); setIsAlertOpen(true)} }className="size-4 " />
+          </Button>
+          <Button variant="ghost" size="icon" className="cursor-pointer "  title="Add Question">
+            <SquarePen onClick={() =>{ localStorage.setItem("testId",test._id); navigate("/addquestions"); } }className="size-4 " />
           </Button>
           </TableCell>
         </TableRow>
