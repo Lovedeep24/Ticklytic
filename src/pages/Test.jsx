@@ -89,8 +89,8 @@ export default function Test() {
           } ,
           {
             headers: {
-              accessToken: `Bearer ${token}`,
-            },
+              Authorization: `Bearer ${token}`,
+            }
           }
       );
         if(response.status===200){
