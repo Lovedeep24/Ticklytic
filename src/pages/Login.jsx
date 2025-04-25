@@ -1,21 +1,19 @@
-import React, { useState } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-// import styles from "../Styles/Login.module.css";
-import axios from "axios";
+import React from 'react';
 import LoginForm from '@/components/ui/loginForm';
-
+import login from '../assets/login.mp4'
 export default function Login() {
   
   return (
-    <>
-        <div className="flex items-center justify-center h-screen w-full bg-gray-200">
-            <div className='w-[80%] h-full flex border-2 border-amber-900 justify-center items-center'>
-                <LoginForm/>
-            </div>
+     <div className='bg-gray-200 flex items-center justify-center h-screen w-full'> 
+        <div className='w-1/2 h-[100vh]  bg-gray-200'>
+          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+            <source src={login} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </div>
-        </>
-      
+        <div className="w-1/2  flex items-center justify-center h-full  ">
+          <LoginForm/>
+        </div>
+      </div>  
   )
 }

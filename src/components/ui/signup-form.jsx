@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 
 export function SignupForm() {
 const [isOpen, setIsOpen] = useState(false);
+const[isLoading, setIsLoading] = useState(false);
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [firstname, setFirstname] = useState("");
@@ -31,7 +32,6 @@ const [errors, setErrors] = useState({
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-
     let newErrors = {
       firstname: firstname.trim() === "",
       lastname: lastname.trim() === "",
@@ -41,14 +41,16 @@ const [errors, setErrors] = useState({
     };
     setErrors(newErrors);
     if (newErrors.confirmPassword && confirmPassword.length > 0) {
-      toast.error("Passwords do not match!");
+      toast.error("Passwords do not match!"); 
+      return;
     }
     if (Object.values(newErrors).includes(true)) {
-      return;
+      return toast.error("All fields are mandatory");
     }
     else{
       const fullName = `${firstname} ${lastname}`.trim();
       try {
+        setIsLoading(true);
         const response = await axios.post("http://localhost:9000/signup", {
             name:fullName,
             email,
@@ -56,7 +58,8 @@ const [errors, setErrors] = useState({
         });
         console.log(response.status);
         if (response.status === 200) {
-          toast.success("Signed up successfully!"); 
+          toast.success("Signed up successfully!");
+          setIsLoading(false); 
           navigate("/login");
           console.log("Form submitted");
         }
@@ -72,49 +75,49 @@ const [errors, setErrors] = useState({
             } else {
               toast.error("Something went wrong. Please try again later.");
             }
+            setIsLoading(false);
         }
       }
     }
 
   };
 
-     
-  
-  return (
+return (
     <div 
-    className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white ">
-      <form className=" border-2 p-4" onSubmit={handleSubmit}>
+    className="h-full w-full  mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white ">
+      <form className=" h-[80%] w-[80%]  p-4" onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-bold mb-20">SIGNUP TO <span className="text-[#7142CA]">TICKLYTIC</span></h1>
         <div
           className=" flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer className={"w-full text-start"}>
-            <Label htmlFor="firstname">First name</Label>
-            <Input id="firstname" placeholder="Tyler" type="text" className={errors.firstname ? "border-red-500" : ""} value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
+            <Label htmlFor="firstname" className="text-xl">First name</Label>
+            <Input id="firstname" placeholder="Tyler" type="text" className={`text-xl ${errors.firstname ? "border-red-500" : ""}`} value={firstname} onChange={(e)=>setFirstname(e.target.value)}/>
           </LabelInputContainer>
           <LabelInputContainer className={"w-full text-start"}>
-            <Label htmlFor="lastname">Last name</Label>
-            <Input id="lastname" placeholder="Durden" type="text" value={lastname}  className={errors.lastname ? "border-red-500" : ""} onChange={(e)=>setLastname(e.target.value)} />
+            <Label htmlFor="lastname" className="text-xl">Last name</Label>
+            <Input id="lastname" placeholder="Durden" type="text" value={lastname}  className={`text-xl ${errors.lastname ? "border-red-500" : ""}`} onChange={(e)=>setLastname(e.target.value)} />
           </LabelInputContainer>
         </div>
         <LabelInputContainer className={"w-full text-start mb-4"}>
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@ticklytic.com" type="email" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
-          <p className=" text-xs text-muted-foreground" role="region" aria-live="polite">
+          <Label htmlFor="email" className="text-xl">Email Address</Label>
+          <Input id="email" placeholder="projectmayhem@ticklytic.com" type="email" value={email} className={`text-xl ${errors.email ? "border-red-500" : ""}`} onChange={(e)=>setEmail(e.target.value)} />
+          <p className=" text-lg text-[#6C24BE]" role="region" aria-live="polite">
         We won&lsquo;t share your email with anyone
       </p>
         </LabelInputContainer>
         <LabelInputContainer className={"w-full text-start mb-4"}>
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" value={password}  className={errors.password ? "border-red-500" : ""} onChange={(e)=>setPassword(e.target.value)} />
+          <Label htmlFor="password" className="text-xl">Password</Label>
+          <Input id="password" placeholder="••••••••" type="password" value={password}  className={`text-xl ${errors.password ? "border-red-500" : ""}`} onChange={(e)=>setPassword(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className={"w-full text-start mb-4"}>
-          <Label htmlFor="confirmpassword">confirm password</Label>
-          <Input id="confirmpassword" placeholder="••••••••" type="confirmpassword" value={confirmPassword}  className={errors.confirmPassword ? "border-red-500" : ""} onChange={(e)=>setConfirmPassword(e.target.value)} />
+          <Label htmlFor="confirmpassword" className="text-xl">confirm password</Label>
+          <Input id="confirmpassword" placeholder="••••••••" type="confirmpassword" value={confirmPassword}  className={`text-xl ${errors.confirmPassword ? "border-red-500" : ""}`} onChange={(e)=>setConfirmPassword(e.target.value)} />
         </LabelInputContainer>
 
         <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+          className="bg-gradient-to-br text-lg relative group/btn bg-[#6C24BE] w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit">
-          Sign up &rarr;
+          {isLoading ? "Signing in..." :  "Sign up →" } 
           <BottomGradient />
         </button>
         <Toaster richColors position="top-center" />
@@ -122,18 +125,11 @@ const [errors, setErrors] = useState({
           className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-3 h-[1px] w-full" />
         
         <div className="flex w-full items-center justify-center gap-2">
-          <div className="w-12 flex flex-col space-y-4">
-            <button
-              className=" relative group/btn  flex space-x-2 items-center justify-start px-4 w-auto text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-              type="submit">
-              <IconBrandGoogle className="h-8 w-8 text-neutral-800 dark:text-neutral-300" />
-              {/* <BottomGradient /> */}
-            </button>
-          </div>
-          <div className="flex items-center justify-center h-[100%]">
+        
+          <div className="flex items-center justify-center h-[100%] text-lg">
             <p> Already have an account? 
             <span 
-              className="font-bold cursor-pointer text-black-600 hover:underline"
+              className="font-bold cursor-pointer text-[#6C24BE] hover:underline text-lg"
               onClick={() => navigate("/login")}>
             Login
             </span>

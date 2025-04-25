@@ -29,6 +29,7 @@ export default function AddQuestionsComp({open,setOpen,testId,fetchTests = null}
     setQuestions([{ id: 1, questionText: '', options: ['', '', '', ''], correctOption: '' }]);
   };
   const handleAddQuestions = async (e) => {
+    const token = localStorage.getItem("accessToken");
     e.preventDefault();
     const testid = testId;
     if(!testid)
@@ -50,6 +51,10 @@ export default function AddQuestionsComp({open,setOpen,testId,fetchTests = null}
     try {
       const response = await axios.patch(`http://localhost:9000/${testId}/ques-to-test`, {
           questions
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
       if (response.status === 200) {
         toast.success("Questions inserted successfully");

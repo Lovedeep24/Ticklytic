@@ -8,18 +8,17 @@ export default function AddQuestion() {
     const [error, setError] = useState('');
     const [tests,setTests]=useState([]);
   const fetchtests=async()=>{
-       const token = localStorage.getItem('token'); // Retrieve the token
+       const token = localStorage.getItem('token'); 
        const decode=jwtDecode(token);
        console.log(decode);
        if (!token) {
          alert("Unauthorized access. Please login.");
-         window.location.href = "/login"; // Redirect to login
+         window.location.href = "/login"; 
          return;
        }
        const response=axios.get('http://localhost:9000/tests',{
          headers: {
-           'Authorization': `Bearer ${token}`,  
-           'Content-Type': 'application/json'
+           accessToken : `Bearer ${token}`
          }
        });
        if (response.status != 200) {

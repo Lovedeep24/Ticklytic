@@ -10,7 +10,7 @@ export default function TestCluster() {
    const[tests,setTests]=useState([]);
     const navigate = useNavigate();
     const fetchtests=async()=>{
-      const token = localStorage.getItem('token'); // Retrieve the token
+      const token = localStorage.getItem('accessToken'); // Retrieve the token
       const decode=jwtDecode(token);
       console.log(decode);
       if (!token) {
@@ -20,8 +20,7 @@ export default function TestCluster() {
       }
       const response=await fetch('http://localhost:9000/tests',{
         headers: {
-          'Authorization': `Bearer ${token}`,  
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${token}`,
         }
       });
       if (!response.ok) {

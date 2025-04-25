@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function LoginForm() {
-
+const[isLoading, setIsLoading] = useState(false);
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [role, setRole] = useState("");
@@ -36,14 +36,16 @@ const [errors, setErrors] = useState({
     }
     else{
       try {
+        setIsLoading(true);
         const response = await axios.post("http://localhost:9000/login", {
             email,
             password,
             role
         });
-        console.log(response.status);
+        console.log(response.data);
         if (response.status === 200) {
           localStorage.setItem("accessToken", response.data.accessToken);
+          setIsLoading(false);
           if(role === "User")
           {
             localStorage.setItem("userId",response.data.userId);
@@ -71,6 +73,7 @@ const [errors, setErrors] = useState({
             } else {
               toast.error("Something went wrong. Please try again later.");
             }
+            setIsLoading(false);
         }
       }
     }
@@ -82,14 +85,16 @@ const [errors, setErrors] = useState({
   return (
     (<div 
     className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <form className="" onSubmit={handleLogin}>
+ 
+      <div className=" h-[100%] w-[65%] flex gap-1 flex-col items-center justify-center">
+      <h1 className="text-3xl font-bold mb-20">LOGIN TO <span className="text-[#7142CA]">TICKLYTIC</span></h1>
         <LabelInputContainer className="mb-4 text-start">
-          <Label htmlFor="email">Email Address</Label>
-          <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={email} className={errors.email ? "border-red-500" : ""} onChange={(e)=>setEmail(e.target.value)} />
+          <Label htmlFor="email" className="text-xl">Email Address</Label>
+          <Input id="email" placeholder="projectmayhem@fc.com" type="email" value={email} className={`p-5 text-xl ${errors.email ? "border-red-500" : ""}`} onChange={(e)=>setEmail(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4  text-start ">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" placeholder="••••••••" type="password" value={password}  className={errors.password ? "border-red-500" : ""} onChange={(e)=>setPassword(e.target.value)} />
+          <Label htmlFor="password"  className="text-xl">Password</Label>
+          <Input id="password" placeholder="••••••••" type="password" value={password}  className={`p-5 text-xl ${errors.password ? "border-red-500" : ""}`} onChange={(e)=>setPassword(e.target.value)} />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
             <div className="flex gap-5 items-center">
@@ -99,10 +104,10 @@ const [errors, setErrors] = useState({
                   type="radio" 
                   name="role"
                   value="Admin"
-                  className={`w-5 h-5 errors.role ? "border-red-500" : "" `}
+                  className={`w-5 h-5 text-xl `}
                   onChange={(e) => setRole(e.target.value)}
                 />  
-                <Label htmlFor="role-admin">Admin</Label>
+                <Label htmlFor="role-admin" className="text-xl">Admin</Label>
                 </div>
              
             
@@ -112,10 +117,10 @@ const [errors, setErrors] = useState({
                   type="radio" 
                   name="role"
                   value="User"
-                  className={`w-5 h-5 errors.role ? "border-red-500" : "" `}
+                  className="w-5 h-5 text-xl"
                   onChange={(e) => setRole(e.target.value)}
                 />
-                <Label htmlFor="role-user">User</Label>
+                <Label htmlFor="role-user" className="text-xl">User</Label>
                 </div>
           
             
@@ -123,9 +128,9 @@ const [errors, setErrors] = useState({
           
         </LabelInputContainer>
         <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit">
-          Login &rarr;
+          className="bg-gradient-to-br relative group/btn bg-[#6C24BE] w-full text-lg text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+          type="submit" onClick={handleLogin}>
+          {isLoading ? "Logging in.." : "Login →"}
           <BottomGradient />
         </button>
         <Toaster richColors position="top-center" />
@@ -133,25 +138,17 @@ const [errors, setErrors] = useState({
           className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-3 h-[1px] w-full" />
         
         <div className="flex w-full items-center justify-center gap-2">
-          <div className="w-12 flex flex-col space-y-4">
-            <button
-              className=" relative group/btn  flex space-x-2 items-center justify-start px-4 w-auto text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]"
-              type="submit">
-              <IconBrandGoogle className="h-8 w-8 text-neutral-800 dark:text-neutral-300" />
-              {/* <BottomGradient /> */}
-            </button>
-          </div>
-          <div className="flex items-center justify-center h-[100%]">
+          <div className="flex items-center justify-center h-[100%] text-lg">
             <p> Don't have an account?  
             <span 
-              className="font-bold cursor-pointer text-black-600 hover:underline"
+              className="font-bold cursor-pointer text-black-600 hover:underline text-lg text-[#6C24BE]"
               onClick={() => navigate("/signup")}>
              Signup
             </span>
               </p>
           </div>
         </div>
-      </form>
+      </div>
      
     </div>)
   );

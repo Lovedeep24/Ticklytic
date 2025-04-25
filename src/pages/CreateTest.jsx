@@ -39,6 +39,7 @@ export default function CreateTest() {
 
 
   const handleCreation = async () => {
+    const token = localStorage.getItem("accessToken");
       if(!testName || !description || !duration)
       { 
         toast.error("All fields are mandatory");
@@ -54,7 +55,12 @@ export default function CreateTest() {
         return;
       }
       try {
-          const response = await axios.post("http://localhost:9000/createTest", {
+          const response = await axios.post("http://localhost:9000/createTest",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              }
+            } ,{
               testName,
               description,
               duration,
@@ -85,31 +91,33 @@ export default function CreateTest() {
   
   return (
     <>
-    <div className="p-5 font-sans bg-gray-100 ">
-      <div className="border-6 border-blue-900">
+    <div className="p-5 font-sans boorder-2  bg-gray-100 ">
       <div className='border-2  w-auto border-red-700 '>
-      <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="outline" aria-label="Open account menu">
-          <CircleUserRound size={25} strokeWidth={1.5} aria-hidden="true" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="max-w-64">
-        <DropdownMenuLabel className="flex flex-col">
-          <span>Signed in as</span>
-          <span className="text-xs font-normal text-foreground">k.kennedy@originui.com</span>
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>Option 1</DropdownMenuItem>
-          <DropdownMenuItem>Option 2</DropdownMenuItem>
-          <DropdownMenuItem>Option 3</DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Logout</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="icon" variant="outline" aria-label="Open account menu">
+              <CircleUserRound size={25} strokeWidth={1.5} aria-hidden="true" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="max-w-64">
+            <DropdownMenuLabel className="flex flex-col">
+              <span>Signed in as</span>
+              <span className="text-xs font-normal text-foreground">k.kennedy@originui.com</span>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>Option 1</DropdownMenuItem>
+                <DropdownMenuItem>Option 2</DropdownMenuItem>
+                <DropdownMenuItem>Option 3</DropdownMenuItem>
+              </DropdownMenuGroup>
+           <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
+
       <div className="flex flex-col w-full justify-center items-center">
         <div className="flex flex-col w-[30%] p-5 rounded-xl gap-5 border-2 ">
           <div className='flex flex-col gap-1 text-start'>
@@ -154,7 +162,6 @@ export default function CreateTest() {
        
        <div className=" border-2">
      <InteractiveHoverButton onClick={handleCreation} />
-   </div>
    </div>
    <Toaster richColors position="top-center" />
     <AddQuestionsComp open={openQuestionDialog} setOpen={setOpenQuestionDialog} testId={testId} />

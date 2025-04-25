@@ -44,8 +44,13 @@ const handleSort = (column) => {
   }
 };
 const fetchSubmissions = async () => {
+  const token = localStorage.getItem("accessToken");
   try {
-    const response = await axios.get("http://localhost:9000/submissions");
+    const response = await axios.get("http://localhost:9000/submissions",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     console.log(response.data);
     setTests(response.data);
     setIsLoading(false);

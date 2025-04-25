@@ -48,8 +48,13 @@ const handleSort = (column) => {
   }
 };
 const fetchTests = async () => {
+  const token = localStorage.getItem("accessToken");
   try {
-    const response = await axios.get("http://localhost:9000/tests");
+    const response = await axios.get("http://localhost:9000/tests",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
     console.log(response.data.data);
     setTests(response.data.data);
     setIsLoading(false);

@@ -36,16 +36,6 @@ export default function Permissions() {
     }
   };
 
-  // const screenSharing = async () => {
-  //   try {
-  //     const screenShare = await navigator.mediaDevices.getDisplayMedia({ video: true });
-  //     setScreenShare(true);
-  //     toast.success("Screen Share Started");
-  //   } catch (error) {
-  //     toast.error("Screen Sharing is not Available");
-  //     console.log(error);
-  //   }
-  // };
 
   const allPermissionsGranted = video && audio;
 

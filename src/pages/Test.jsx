@@ -1,10 +1,6 @@
 import React, { useState, useEffect,useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+import { useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import { ChevronRight } from "lucide-react";
-import { SlidingNumber } from '@/components/ui/sliding-number';
 import AlertDailogBox from './AlertDailogBox';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -19,20 +15,14 @@ export default function Test() {
     const videoRef = useRef(null);
     const streamRef = useRef(null);
   
-    const token = localStorage.getItem("accessToken");
-    const decodedToken = jwtDecode(token);
+
     const fetchQuestions = async () => { 
-      if (!token) {
-        alert("Unauthorized access. Please login.");
-        window.location.href = "/login";
-        return;
-      }
-   
+      const token = localStorage.getItem("accessToken");
+      console.log("This is token",token);
       try {
         const response = await fetch(`http://localhost:9000/tests/${testId}/questions`,{
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${token}`,
           }
         });
 
@@ -82,6 +72,7 @@ export default function Test() {
     };
     
     const handleSubmit =async () => {
+      const token = localStorage.getItem("accessToken");
       let correctCount = 0;
       questions.forEach((question) => {
         if (userAnswer[question._id] === question.correctOption) {
@@ -91,12 +82,17 @@ export default function Test() {
       const userId = localStorage.getItem("userId");
       try {
         const response= await axios.post("http://localhost:9000/submitTest",
-          {
+        {
             score:correctCount,
             testId,
             userId,
+          } ,
+          {
+            headers: {
+              accessToken: `Bearer ${token}`,
+            },
           }
-        );
+      );
         if(response.status===200){
           setIsOpen(true);
         }
