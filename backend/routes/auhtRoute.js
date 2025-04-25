@@ -5,6 +5,7 @@ const submitTest= require("../Controllers/submitTest");
 const submissioncheck=require('../Controllers/submissionCheck')
 const validateQuestion=require('../Middlewares/validateQuestion');
 const validateToken = require("../Middlewares/validateToken");
+const authorizeRole = require("../Middlewares/authorizeRole")
 const insertQuestion = require("../Controllers/insertQuestions");
 // const forgotPassword = require("../Controllers/forgotPassword");
 // const resetPassword = require("../Controllers/resetPassword");
@@ -21,14 +22,14 @@ router.post("/login", login);
 router.post("/signup",signup);
 router.get("/questions", findQuestion);
 router.get("/fetchUsers", fetchUsersData);
-router.post("/insertquestions",insertQuestion);
-router.post("/createTest", createTest);
-router.patch("/:testid/ques-to-test", addquestionToTest);
-router.get("/tests", allTests);
-router.get("/tests/:testId/questions", questions);
-router.post('/submitTest', submitTest);
+router.post("/insertquestions",validateToken,authorizeRole('admin'),insertQuestion);
+router.post("/createTest", validateToken,authorizeRole('admin'),createTest);
+router.patch("/:testid/ques-to-test",validateToken,authorizeRole('admin'), addquestionToTest);
+router.get("/tests",validateToken,authorizeRole('User'), allTests);
+router.get("/tests/:testId/questions", validateToken,authorizeRole('User'),questions);
+router.post('/submitTest',validateToken,authorizeRole('User'), submitTest);
 router.get('/submissions', submissioncheck );
-router.delete('/deleteTest', deleteTest );
+router.delete('/deleteTest',validateToken,authorizeRole('admin'), deleteTest );
 // router.post('/forget-password', forgotPassword);
 // router.get('/reset-password', resetPassword );
 

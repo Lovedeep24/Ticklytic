@@ -6,8 +6,7 @@ const { toast } = require("sonner");
 //LOGIN
 const login=async(req,res)=>{
     const {email,password,role}=req.body;
-    console.log(email,password);
-  
+
     if(!email || !password)
         {
             res.status(300).json("No email or password");
@@ -37,7 +36,8 @@ const login=async(req,res)=>{
                                 email : User.email,
                                 role:User.role,
                             }
-                        },process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1hr"})
+                        },process.env.JWT_SECRET,
+                        {expiresIn:"1hr"})
                         res.status(200).json({accessToken, userId:User.id});
                     }
                 else
@@ -67,20 +67,17 @@ const signup=async(req,res)=>{
         const existingUser=await Signup.findOne({email});
         if(existingUser)
             {
-                console.log("User already exists");
+          
                 res.status(400).json("User already exist");
             
             }
         else
             {
-                console.log("creating user");
-                const user=await Signup.create({
+               await Signup.create({
                     name,
                     email,
                     password:hashedPassword,
-                   });
-               console.log("user created");
-               
+                   });      
                res.status(200).json("user has been created successfully");
                toast.success("Account created successfully");
             }
@@ -92,5 +89,4 @@ const signup=async(req,res)=>{
     }
    
     }
-
 module.exports={login,signup}
