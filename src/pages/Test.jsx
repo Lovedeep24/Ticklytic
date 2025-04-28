@@ -102,21 +102,28 @@ export default function Test() {
       }
     };
   return (
-    <div className='border-2 border-red-700 w-screen h-screen m-0 p-0'>
-      <div className='flex flex-col bg-[#161D29] items-center justify-center'>
-        <div className='flex justify-between w-[70%]'>
-          <a className='text-white'>Logo</a>
-          <h1 className='text-5xl text-white'>{testName}</h1>
+    <div className= ' w-screen h-screen m-0 p-0'>
+      <div className='flex flex-col p-3 bg-[#161D29] items-center justify-center'>
+        <div className='flex justify-between w-full items-center'>
+        <div className="text-white text-xl p-5 flex items-center justify-center h-10 font-bold ">
+             <img
+             onClick={() => router.push('/')}
+              src="/ticklyticLogo.png" 
+              alt="Logo"
+              className="h-14 w-auto cursor-pointer"
+            /> 
+          </div>
+          <h1 className='text-4xl mr-10 text-white'>{testName}</h1>
         </div>
       </div>
       
-    <div className='flex w-[100%] h-[90%] border-2 border-blue-900'>
+    <div className='flex w-[100%] h-[90%]'>
       <div className='overflow-auto w-[75%] '>  
         {questions.length === 0 ? (
           <p className='text-xl'>No questions available in the test</p>
           ) : (
-          <div className='flex flex-col border-2 w-full h-full '>
-            <div className='border-2 border-blue-950 flex flex-col p-4 gap-5 w-full'>
+          <div className='flex flex-col  w-full h-full '>
+            <div className=' flex flex-col p-4 gap-5 w-full'>
               {questions.map((question, index) => (
                 <div key={question._id} className='w-full border-b-2 gap-2 flex flex-col items-start justify-start'>
                   <p className='text-3xl text-[#161D29]'>{question.questionText}</p>
@@ -140,7 +147,7 @@ export default function Test() {
               ))}
             </div>
 
-          <div className='border-2 border-black flex px-8 w-[70%] justify-between items-center'>
+          <div className=' flex px-8 w-[70%] justify-between items-center'>
           <Button className="relative " onClick={() => handleSubmit()  }>
   Submit Test
 </Button>
@@ -151,8 +158,8 @@ export default function Test() {
         )}
     </div>
     {isOpen && <AlertDailogBox isOpen={isOpen} setIsOpen={setIsOpen} /> }
-          <div className='flex flex-col w-[25%] items-center  justify-center h-full border-2 border-yellow-500'>
-            <div className='w-[80%] h-[40%]'>
+          <div className='flex flex-col w-[25%] items-center h-full '>
+            <div className='w-[80%] h-[40%] mt-5'>
             <video
                         ref={videoRef}
                         autoPlay

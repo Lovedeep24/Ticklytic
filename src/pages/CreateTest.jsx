@@ -1,6 +1,5 @@
 import React from 'react'
 import {useState} from 'react';
-import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
@@ -20,8 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CircleUserRound } from "lucide-react";
-
-
+import axios from 'axios';
 export default function CreateTest() {
   const [testName,setTestName]=useState('');
   const [description,setDescription]=useState('');
@@ -82,10 +80,13 @@ export default function CreateTest() {
       } catch (error) {
         if (axios.isAxiosError(error) && error.response?.status === 409) {
           toast.error("Test with same name already exists!");
-        } else {
-          toast.error("Something went wrong");
-          console.error(error);
-        }
+        } else if (error.status === 401) {
+              toast.error("You are not authorized. Please login again!");
+            } else if (error.status === 405) {
+              toast.error("You don't have permission to access this route.");
+            } else {
+              toast.error("Something went wrong!");
+            }
       }
   }
   

@@ -10,7 +10,6 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog";
-  import { Button, buttonVariants } from "@/components/ui/button";
   import { Trash2 } from "lucide-react";
 import axios from 'axios';
 import { toast } from 'sonner';

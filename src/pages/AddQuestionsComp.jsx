@@ -64,15 +64,19 @@ export default function AddQuestionsComp({open,setOpen,testId,fetchTests = null}
       }
     } catch (error) {
       if (error.response) {
-        if (error.response.status === 401) {
+        if (error.response.status === 402) {
           toast.error("All fields are mandatory");
         } else if (error.response.status === 400) {
          toast.error("Must give 4 options");
         } else if (error.response.status === 409) {
           toast.error("Question already exists in the database");
-        } else {
-          toast.error("Internal server error");
-        }
+        }  else if (error.status === 401) {
+              toast.error("You are not authorized. Please login again!");
+            } else if (error.status === 405) {
+              toast.error("You don't have permission to access this route.");
+            } else {
+              toast.error("Something went wrong!");
+            }
       }
     }
   };

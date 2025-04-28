@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import {
     CheckCircle,
 } from "lucide-react";
+import axios from 'axios';  
 
 export default function TestCluster() {
    const[tests,setTests]=useState([]);
@@ -18,24 +19,32 @@ export default function TestCluster() {
         window.location.href = "/login"; // Redirect to login
         return;
       }
-      const response=await fetch('http://localhost:9000/tests',{
-        headers: {
-          Authorization: `Bearer ${token}`,
+      try {
+        const response=await axios.get('http://localhost:9000/tests',{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const data=await response.json();
+        if(data.data)
+        {
+          setTests(data.data);
+          console.log(data.data);
+        }
+      } catch (error) {
+        if (error.status === 401) {
+          toast.error("You are not authorized. Please login again!");
+        } else if (error.message === 405) {
+          toast.error("You don't have permission to access this.");
+        } else {
+          toast.error("Something went wrong!");
+        }
       }
-      const data=await response.json();
-      if(data.data)
-      {
-        setTests(data.data);
-        console.log(data.data);
-      }
-      else
-      {
-        console.error("Error fetching tests");
-      }
+  
+
     }
     useEffect(()=>
       { 
@@ -49,8 +58,19 @@ export default function TestCluster() {
     }
   return (
     <div className='bg-black min-h-screen w-full m-0 p-0'>
-    <h1 className="text-white text-4xl">Test Cluster</h1>
- 
+       <div className='flex flex-col p-3 bg-[#161D29] items-center justify-center'>
+        <div className='flex justify-between w-full items-center'>
+        <div className="text-white text-xl p-5 flex items-center justify-center h-10 font-bold ">
+             <img
+             onClick={() => router.push('/')}
+              src="/ticklyticLogo.png" 
+              alt="Logo"
+              className="h-14 w-auto cursor-pointer"
+            /> 
+          </div>
+          <h1 className="text-white text-4xl">Test Cluster</h1>
+        </div>
+      </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">
                 {tests.map((test, index) =>{
                    const noOfQuestions = test.questions.length;

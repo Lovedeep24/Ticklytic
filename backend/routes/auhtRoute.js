@@ -28,7 +28,7 @@ router.patch("/:testid/ques-to-test",validateToken,authorizeRole('admin'), addqu
 router.get("/tests",validateToken,authorizeRole('User'), allTests);
 router.get("/tests/:testId/questions", validateToken,authorizeRole('User'),questions);
 router.post('/submitTest',validateToken,authorizeRole('User'), submitTest);
-router.get('/submissions', submissioncheck );
+router.get('/submissions',validateToken,authorizeRole('admin'), submissioncheck );
 router.delete('/deleteTest',validateToken,authorizeRole('admin'), deleteTest );
 // router.post('/forget-password', forgotPassword);
 // router.get('/reset-password', resetPassword );

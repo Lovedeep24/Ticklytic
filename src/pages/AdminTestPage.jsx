@@ -58,8 +58,14 @@ const fetchTests = async () => {
     console.log(response.data.data);
     setTests(response.data.data);
     setIsLoading(false);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    if (error.status === 401) {
+      toast.error("You are not authorized. Please login again!");
+    } else if (error.status === 405) {
+      toast.error("You don't have permission to access this route.");
+    } else {
+      toast.error("Something went wrong!");
+    }
   }
 };
 

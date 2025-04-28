@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
-import { Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import axios from "axios";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import {
   Table,
   TableBody,
@@ -54,8 +54,14 @@ const fetchSubmissions = async () => {
     console.log(response.data);
     setTests(response.data);
     setIsLoading(false);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    if (error.status === 401) {
+      toast.error("You are not authorized. Please login again!");
+    } else if (error.status === 405) {
+      toast.error("You don't have permission to access this route.");
+    } else {
+      toast.error("Something went wrong!");
+    }
   }
 };
 
@@ -203,6 +209,7 @@ fetchSubmissions();
     </TableBody>
   </Table>
 </div>}
+   <Toaster richColors position="top-center" />
 </div>
   )
 }
