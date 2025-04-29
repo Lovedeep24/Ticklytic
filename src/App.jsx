@@ -11,12 +11,13 @@ import Test from './pages/Test';
 import Results from './pages/Results';
 import Permissions from './pages/Permissions1';
 import AdminPortal from './pages/AdminPortal';
-import AddQuestion from './pages/AddQuestionsComp';
+import AddQuestion from './pages/AddQuestion';
 import Submissions from './pages/Submissions';
 import TestCluster from './pages/TestCluster';
 import CreateTest from './pages/CreateTest';
 import AdminTestPage from './pages/AdminTestPage';
 import NotFound from './pages/NotFound';
+import Users from './pages/Users';
 function App() {
 
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/result" element={<Results />} />
           <Route path="/test/:testId" element={<Test />} />
           <Route path="/tests" element={<TestCluster />} />
+          <Route path="/users" element={<Users />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

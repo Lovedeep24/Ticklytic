@@ -5,9 +5,6 @@ import { Toaster } from "@/components/ui/sonner";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
-import {
-  IconBrandGoogle
-} from "@tabler/icons-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -149,7 +146,7 @@ const [errors, setErrors] = useState({
           </div>
         </div>
       </div>
-     
+     <Toaster richColors position="top-center" />
     </div>)
   );
 }

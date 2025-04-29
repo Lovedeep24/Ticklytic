@@ -19,6 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CircleUserRound } from "lucide-react";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 export default function CreateTest() {
   const [testName,setTestName]=useState('');
@@ -78,46 +79,55 @@ export default function CreateTest() {
             console.log(response);
           }
       } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 409) {
-          toast.error("Test with same name already exists!");
-        } else if (error.status === 401) {
-              toast.error("You are not authorized. Please login again!");
-            } else if (error.status === 405) {
-              toast.error("You don't have permission to access this route.");
-            } else {
-              toast.error("Something went wrong!");
-            }
-      }
+          if (error.status === 401) {
+            console.log(error);
+            toast.error("You are not authorized. Please login again!");
+          } else if (error.status === 405) {
+            toast.error("You don't have permission to access this route.");
+          } else if (error.status === 403) {
+            console.log(error);
+            toast.error("Please Login Again");
+          }else {
+            toast.error("Something went wrong!");
+          }
+        }
   }
   
+    const handleLogout=()=>{
+      localStorage.removeItem("accessToken");
+      toast.success("Logged out successfully!");
+      window.location.href = "/";
+    }
   return (
     <>
     <div className="p-5 font-sans boorder-2  bg-gray-100 ">
-      <div className='border-2  w-auto border-red-700 '>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button size="icon" variant="outline" aria-label="Open account menu">
-              <CircleUserRound size={25} strokeWidth={1.5} aria-hidden="true" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="max-w-64">
-            <DropdownMenuLabel className="flex flex-col">
-              <span>Signed in as</span>
-              <span className="text-xs font-normal text-foreground">k.kennedy@originui.com</span>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem>Option 1</DropdownMenuItem>
-                <DropdownMenuItem>Option 2</DropdownMenuItem>
-                <DropdownMenuItem>Option 3</DropdownMenuItem>
-              </DropdownMenuGroup>
-           <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              Logout
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+    <div className='flex w-full justify-between items-center p-4'>
+                <h1 className='text-[#333] font-bold text-3xl'>Admin Portal</h1>
+                <h1 className="text-xl font-bold">Test Cluster</h1>
+                <DropdownMenu>
+                <DropdownMenuTrigger className='size-13' asChild>
+                  <Button variant="outline" aria-label="Open account menu">
+                    <CircleUserRound  size={20} strokeWidth={2} aria-hidden="true" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="max-w-64 mr-10 ">
+                  <DropdownMenuLabel className="flex flex-col">
+                    <span className="text-xs font-normal text-foreground">Welcome, Admin</span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className='text-md'>
+                  <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
+                  <Link to="/admin"><DropdownMenuItem>Admin Home</DropdownMenuItem></Link>
+                  <Link to="/createTest"><DropdownMenuItem>Create Test</DropdownMenuItem></Link>
+                  <Link to="/users"><DropdownMenuItem>Users</DropdownMenuItem></Link>
+                  <Link to="/submissions"><DropdownMenuItem>Submissions</DropdownMenuItem></Link>
+                  <Link to="/addQuestions"><DropdownMenuItem>Add Questions</DropdownMenuItem></Link>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="bg-red-500 text-white " onClick={handleLogout}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+                </div>
 
       <div className="flex flex-col w-full justify-center items-center">
         <div className="flex flex-col w-[30%] p-5 rounded-xl gap-5 border-2 ">

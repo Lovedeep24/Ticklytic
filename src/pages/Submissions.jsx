@@ -3,6 +3,18 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Input } from "@/components/ui/input"
 import axios from "axios";
 import { Toaster } from "@/components/ui/sonner";
+import { Button } from "@/components/ui/button";
+import { CircleUserRound } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Link } from 'react-router-dom';
 import { toast } from "sonner";
 import {
   Table,
@@ -51,27 +63,59 @@ const fetchSubmissions = async () => {
         Authorization: `Bearer ${token}`,
       }
     });
-    console.log(response.data);
     setTests(response.data);
     setIsLoading(false);
-  } catch (error) {
-    if (error.status === 401) {
-      toast.error("You are not authorized. Please login again!");
-    } else if (error.status === 405) {
-      toast.error("You don't have permission to access this route.");
-    } else {
-      toast.error("Something went wrong!");
+  }catch (error) {
+      if (error.status === 401) {
+        toast.error("You are not authorized! Please login again!");
+      } else if (error.status === 405) {
+        toast.error("You don't have permission to access this route.");
+      } else if (error.status === 403) {
+        toast.error("Please Login Again");
+      }else {
+        toast.error("Something went wrong!");
+      }
     }
-  }
 };
 
 useEffect(() => {
 fetchSubmissions();
 }, []);
 
+  const handleLogout=()=>{
+    localStorage.removeItem("accessToken");
+    toast.success("Logged out successfully!");
+    window.location.href = "/";
+  }
   return (
     <div>
-  
+    <div className='flex w-full justify-between items-center p-4'>
+                <h1 className='text-[#333] font-bold text-3xl'>Admin Portal</h1>
+                <h1 className="text-xl font-bold">Test Cluster</h1>
+                <DropdownMenu>
+                <DropdownMenuTrigger className='size-13' asChild>
+                  <Button variant="outline" aria-label="Open account menu">
+                    <CircleUserRound  size={20} strokeWidth={2} aria-hidden="true" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="max-w-64 mr-10 ">
+                  <DropdownMenuLabel className="flex flex-col">
+                    <span className="text-xs font-normal text-foreground">Welcome, Admin</span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup className='text-md'>
+                  <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
+                  <Link to="/admin"><DropdownMenuItem>Admin Home</DropdownMenuItem></Link>
+                  <Link to="/createTest"><DropdownMenuItem>Create Test</DropdownMenuItem></Link>
+                  <Link to="/users"><DropdownMenuItem>Users</DropdownMenuItem></Link>
+                  <Link to="/submissions"><DropdownMenuItem>Submissions</DropdownMenuItem></Link>
+                  <Link to="/addQuestions"><DropdownMenuItem>Add Questions</DropdownMenuItem></Link>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="bg-red-500 text-white " onClick={handleLogout}>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+                </div>
   {isLoading ? (<div className="mx-auto my-16 w-full max-w-6xl rounded border">
     <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
       <Skeleton className="h-6 w-40" /> 

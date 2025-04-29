@@ -51,7 +51,6 @@ export default function TestCluster() {
       fetchtests()
     },[]);
 
-
     const handleTestClick=(id)=>{
       localStorage.setItem("testId",id);
       navigate("/permissions");

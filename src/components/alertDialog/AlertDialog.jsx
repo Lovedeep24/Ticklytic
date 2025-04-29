@@ -17,9 +17,13 @@ export default function AlertDialogBox({ open, setOpen ,testId, fetchTests}) {
 
   const handleDeleteTest = async()=>{
     console.log(testId)
+    const token=localStorage.getItem('accessToken');
     try {
 
       const res=await axios.delete('http://localhost:9000/deleteTest',{
+        headers: {
+          Authorization: `Bearer ${token}`,
+      },
         data: {testId}  
       })
       if(res.status === 200)
@@ -28,8 +32,15 @@ export default function AlertDialogBox({ open, setOpen ,testId, fetchTests}) {
         fetchTests();
     } 
   }catch (error) {
-      console.log(error);
-      toast.error("Couldn't Delete Test! try again")
+      if (error.status === 401) {
+        console.log(error);
+        toast.error("You are not authorized. Please login again!");
+      } else if (error.status === 405) {
+        console.log(error);
+        toast.error("You don't have permission to access this route.");
+      } else {
+        toast.error("Something went wrong!");
+      }
     }
   }
 return (

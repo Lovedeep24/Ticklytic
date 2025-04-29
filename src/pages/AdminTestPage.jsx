@@ -4,8 +4,9 @@ import axios from "axios";
 import AlertDialogBox from '@/components/alertDialog/AlertDialog';
 import AddQuestionsComp from './AddQuestionsComp';
 import { Trash2 , SquarePen} from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -14,6 +15,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/tableUser"
+import { Button } from "@/components/ui/button";
+import { CircleUserRound } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Link } from 'react-router-dom';
 import { useMemo, useState } from "react"
 export default function AdminTestPage() {
   const [tests, setTests] = useState([]);
@@ -48,35 +61,70 @@ const handleSort = (column) => {
   }
 };
 const fetchTests = async () => {
-  const token = localStorage.getItem("accessToken");
+  const token=localStorage.getItem('accessToken');
   try {
     const response = await axios.get("http://localhost:9000/tests",{
       headers: {
         Authorization: `Bearer ${token}`,
-      }
+    }
     });
     console.log(response.data.data);
     setTests(response.data.data);
     setIsLoading(false);
   } catch (error) {
-    if (error.status === 401) {
-      toast.error("You are not authorized. Please login again!");
-    } else if (error.status === 405) {
-      toast.error("You don't have permission to access this route.");
-    } else {
-      toast.error("Something went wrong!");
-    }
-  }
+            if (error.status === 401) {
+              console.log(error);
+              toast.error("You are not authorized. Please login again!");
+            } else if (error.status === 405) {
+              toast.error("You don't have permission to access this route.");
+            } else if (error.status === 403) {
+              console.log(error);
+              toast.error("Please Login Again");
+            }else {
+              toast.error("Something went wrong!");
+            }
+          }
 };
 
-useEffect(() => {
-fetchTests();
-}, []);
+  useEffect(() => {
+  fetchTests();
+  }, []);
 
+  const handleLogout=()=>{
+    localStorage.removeItem("accessToken");
+    toast.success("Logged out successfully!");
+    window.location.href = "/";
+  }
 return (
   <div>
-  
-  {isLoading ? (<div className="mx-auto my-16 w-full max-w-6xl rounded border">
+       <div className='flex w-full justify-between items-center p-4'>
+                   <h1 className='text-[#333] font-bold text-3xl'>Admin Portal</h1>
+                   <h1 className="text-xl font-bold">Test Cluster</h1>
+                   <DropdownMenu>
+                   <DropdownMenuTrigger className='size-13' asChild>
+                     <Button variant="outline" aria-label="Open account menu">
+                       <CircleUserRound  size={20} strokeWidth={2} aria-hidden="true" />
+                     </Button>
+                   </DropdownMenuTrigger>
+                   <DropdownMenuContent className="max-w-64 mr-10 ">
+                     <DropdownMenuLabel className="flex flex-col">
+                       <span className="text-xs font-normal text-foreground">Welcome, Admin</span>
+                     </DropdownMenuLabel>
+                     <DropdownMenuSeparator />
+                     <DropdownMenuGroup className='text-md'>
+                     <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
+                     <Link to="/admin"><DropdownMenuItem>Admin Home</DropdownMenuItem></Link>
+                     <Link to="/createTest"><DropdownMenuItem>Create Test</DropdownMenuItem></Link>
+                     <Link to="/users"><DropdownMenuItem>Users</DropdownMenuItem></Link>
+                     <Link to="/submissions"><DropdownMenuItem>Submissions</DropdownMenuItem></Link>
+                     <Link to="/addQuestions"><DropdownMenuItem>Add Questions</DropdownMenuItem></Link>
+                     </DropdownMenuGroup>
+                     <DropdownMenuSeparator />
+                     <DropdownMenuItem className="bg-red-500 text-white " onClick={handleLogout}>Logout</DropdownMenuItem>
+                   </DropdownMenuContent>
+                 </DropdownMenu>
+                   </div>
+  {isLoading ? (<div className="mx-auto my-16 w-full max-w-7xl rounded border">
     <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
       <Skeleton className="h-6 w-40" /> 
       <Skeleton className="h-10 w-96" /> 
@@ -102,9 +150,8 @@ return (
       </div>
     </div>
   </div>) :
-  <div className="mx-auto my-16 w-full max-w-6xl rounded border">
+  <div className="mx-auto my-16 w-[90%] max-w-8xl rounded border">
   <div className="flex flex-wrap items-center justify-between gap-4 border-b p-4 md:py-2">
-    <h1 className="text-xl font-bold">Test Cluster</h1>
     <Input
       placeholder="Search tests..."
       value={searchTerm}
@@ -138,7 +185,7 @@ return (
           )}
         </TableHead>
         <TableHead
-          className="cursor-pointer border-2"
+          className="cursor-pointer"
         >
           No. of Question
         </TableHead>
@@ -200,6 +247,7 @@ return (
         </TableRow>
       ))}
     </TableBody>
+       <Toaster richColors position="top-center" />
   </Table>
   {isAlertOpen && <AlertDialogBox  open={isAlertOpen} setOpen={setIsAlertOpen} testId={testId} fetchTests={fetchTests}/>}
   {opneAddQuestion && <AddQuestionsComp open={opneAddQuestion} setOpen={setOpenAddQuestion} testId={testId} fetchTests={fetchTests}/>}
