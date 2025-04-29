@@ -1,6 +1,5 @@
 const Users = require('../models/SignupModel'); 
 // const { Users } = require('lucide-react');
-
 const fetchUsersInfo = async (req, res) => {
     try {
         const data = await Users.find({role:"User"});

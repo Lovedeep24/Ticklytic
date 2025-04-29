@@ -6,7 +6,7 @@ try {
     const submission = await TestSubmission.find().populate('testId').populate('userId');
     res.status(200).json(submission);
 } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).send("Error while fetching submission");
 } 
 };

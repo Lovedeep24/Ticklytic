@@ -8,7 +8,7 @@ const clusterSchema=new mongoose.Schema({
     },
     duration:
     {
-        type: number,
+        type: Number,
         required: [true, "You must give test duration"]
     },
     tests:
