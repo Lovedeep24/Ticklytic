@@ -45,25 +45,28 @@ export default function Permissions() {
     navigate(`/test/${testId}`);
   }
   return (
-    <div className="flex border-none border-gray-400 bg-[rgb(22,29,41)] w-screen h-screen">
+    <div className="flex-col sm:flex border-red-400 items-center justify-center bg-[rgb(22,29,41)] w-screen h-screen">
     
-      <div className="w-1/2 p-4 flex justify-center items-center border-none border-white">
+      <div className="sm:w-1/2 w-[100%]   p-4 flex justify-center items-center ">
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted
-          className="w-full h-auto object-cover border-white border-2 rounded-3xl transform -scale-x-100"
+          className="w-[80%] h-auto object-cover border-white border-2 rounded-3xl transform -scale-x-100"
         />
       </div>
 
     
-      <div className="w-1/2 p-4 flex flex-col justify-center items-center space-y-4 text-white">
-        <h1 className="text-2xl font-semibold mb-4">Ready to Join?</h1>
-        <p className="text-xl">Make sure your device is well configured.</p>
+    <div className="sm:w-1/2 w-full flex flex-col h-[60%] items-center justify-center text-white">
+       <div className="flex flex-col items-center justify-center  p-14">
+         <h1 className="text-2xl sm:text-3xl font-semibold">Ready to Join?</h1>
+           <p className="text-xl sm:text-2xl">Make sure your device is well configured.</p>
+       </div>
+      
 
-     
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
+     <div className="flex flex-col items-center space-y-2 px-1 sm:px-10 ">
+      <div className="w-sm sm:w-2xl p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
           <CameraIcon className="w-8 h-8 text-white" />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Allow Camera</span>
@@ -76,8 +79,8 @@ export default function Permissions() {
           </div>
         </div>
 
-  <Toaster richColors position="top-center" />
-        <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
+      <Toaster richColors position="top-center" />
+        <div className="w-sm sm:w-2xl p-4 rounded-lg shadow-md flex items-center space-x-1 sm:space-x-4 border border-white">
           <MicrophoneIcon className="w-8 h-8 text-white" />
           <div className="flex items-center space-x-2 w-full justify-between">
             <span>Allow Microphone</span>
@@ -90,22 +93,7 @@ export default function Permissions() {
           </div>
         </div>
 
-       
-        {/* <div className="w-11/12 p-4 rounded-lg shadow-md flex items-center space-x-4 border border-white">
-          <ComputerDesktopIcon className="w-8 h-8 text-white" />
-          <div className="flex items-center space-x-2 w-full justify-between">
-            <span>Enable Screen Share</span>
-            <input
-              type="checkbox"
-              checked={screenShare}
-              onChange={screenSharing}
-              className="w-8 h-8 ml-auto"
-            />
-          </div>
-        </div> */}
-
-
-        <div className="w-11/12 p-2 items-center">
+        <div className="w-sm sm:w-2xl p-2 items-center">
           <div onClick={()=>handleTest()}
             className={`w-full cursor-pointer block px-8 py-3 rounded-lg text-center text-xl font-semibold ${
               allPermissionsGranted? "bg-purple-700 text-white hover:bg-purple-900"
@@ -115,6 +103,8 @@ export default function Permissions() {
             Proceed to Test
           </div>
         </div>
+     </div>
+      
       </div>
     </div>
   );

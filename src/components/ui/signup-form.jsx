@@ -82,7 +82,7 @@ const [errors, setErrors] = useState({
 return (
     <div 
     className="h-full w-full  mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white ">
-      <form className=" h-[80%] w-[80%]  p-4" onSubmit={handleSubmit}>
+      <form className=" h-[80%] sm:w-[80%] w-[90%]  p-4" onSubmit={handleSubmit}>
       <h1 className="text-3xl font-bold mb-20">SIGNUP TO <span className="text-[#7142CA]">TICKLYTIC</span></h1>
         <div
           className=" flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">

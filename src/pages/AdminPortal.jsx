@@ -74,7 +74,7 @@ const features = [
 export default function AdminPortal() {
   
   return (
-    <div className="h-auto  p-5 flex flex-col gap-5 font-sans bg-gray-100">
+    <div className="h-full p-5 flex flex-col gap-5 font-sans bg-gray-100">
       <div className='flex w-full justify-between items-center p-4'>
       <h1 className='text-[#333] font-bold text-3xl'>Admin Portal</h1>
       <DropdownMenu>

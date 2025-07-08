@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import {
     CheckCircle,
 } from "lucide-react";
@@ -25,15 +27,10 @@ export default function TestCluster() {
             Authorization: `Bearer ${token}`,
           }
         });
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data=await response.json();
-        if(data.data)
-        {
-          setTests(data.data);
-          console.log(data.data);
-        }
+          // setTests(response.data.data);
+          console.log(response.data.data);
+          setTests(response.data.data);
+       
       } catch (error) {
         if (error.status === 401) {
           toast.error("You are not authorized. Please login again!");
@@ -56,7 +53,7 @@ export default function TestCluster() {
       navigate("/permissions");
     }
   return (
-    <div className='bg-black min-h-screen w-full m-0 p-0'>
+    <div className='bg-black min-h-screen border-2 border-amber-300 w-full m-0 p-0'>
        <div className='flex flex-col p-3 bg-[#161D29] items-center justify-center'>
         <div className='flex justify-between w-full items-center'>
         <div className="text-white text-xl p-5 flex items-center justify-center h-10 font-bold ">
@@ -70,7 +67,7 @@ export default function TestCluster() {
           <h1 className="text-white text-4xl">Test Cluster</h1>
         </div>
       </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 p-4 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mt-10 p-4 max-w-[80%] mx-auto">
                 {tests.map((test, index) =>{
                    const noOfQuestions = test.questions.length;
                    const createdAt = test.createdAt;
@@ -124,7 +121,7 @@ export default function TestCluster() {
                                     {test.description}
                                 </p>
                             </div>
-    
+                             <Toaster richColors position="top-center" />
                             <div className="flex items-center justify-between mt-2">
                                 <div
                                     className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">

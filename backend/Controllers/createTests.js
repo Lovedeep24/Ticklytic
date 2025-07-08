@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const Test = require('../models/testSchema');
 const tests = async(req,res)=>{
     console.log('Request body:', req.body); 

@@ -12,7 +12,7 @@ const insertQuestion = require("../Controllers/insertQuestions");
 const createTest=require('../Controllers/createTests');
 const addquestionToTest=require('../Controllers/quesToTest');
 const allTests=require('../Controllers/allTests');
-const questions=require('../Controllers/showTest');
+const showTest=require('../Controllers/showTest');
 const fetchUsersData=require('../Controllers/usersInfo');
 const deleteTest = require("../Controllers/deleteTest");
 // const tests = require("../Controllers/createTests");
@@ -26,7 +26,7 @@ router.post("/insertquestions",validateToken,authorizeRole('Admin'),insertQuesti
 router.post("/createTest", validateToken,authorizeRole('Admin'),createTest);
 router.patch("/:testid/ques-to-test",validateToken,authorizeRole('Admin'), addquestionToTest);
 router.get("/tests",validateToken, allTests);
-router.get("/tests/:testId/questions", validateToken,authorizeRole('User'),questions);
+router.get("/tests/:testId/questions", validateToken,authorizeRole('User'),showTest);
 router.post('/submitTest',validateToken,authorizeRole('User'), submitTest);
 router.get('/submissions',validateToken,authorizeRole('Admin'), submissioncheck );
 router.delete('/deleteTest',validateToken,authorizeRole('Admin'), deleteTest );

@@ -18,19 +18,18 @@ export default function Test() {
 
     const fetchQuestions = async () => { 
       const token = localStorage.getItem("accessToken");
-      console.log("This is token",token);
       try {
-        const response = await fetch(`http://localhost:9000/tests/${testId}/questions`,{
+        const response = await axios.get(`http://localhost:9000/tests/${testId}/questions`,{
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`
           }
         });
-
-        const data = await response.json();
-        if (data.status === "success") {
-          console.log(data.data.questions);
-          setTestName(data.data.testName);
-          setQuestions(data.data.questions);
+        // console.log(response);
+        if (response.status === 200) {
+          const questions=response.data.data.questions;
+          console.log(questions);
+          setTestName(response.data.data.testName);
+          setQuestions(questions);
         } else {
           console.error("Error fetching questions");
         }
@@ -110,15 +109,15 @@ export default function Test() {
              onClick={() => router.push('/')}
               src="/ticklyticLogo.png" 
               alt="Logo"
-              className="h-14 w-auto cursor-pointer"
+              className="h-10 sm:h-14 w-auto cursor-pointer"
             /> 
           </div>
-          <h1 className='text-4xl mr-10 text-white'>{testName}</h1>
+          <h1 className='text-xl sm:text-4xl mr-10 text-white'>{testName}</h1>
         </div>
       </div>
       
-    <div className='flex w-[100%] h-[90%]'>
-      <div className='overflow-auto w-[75%] '>  
+    <div className='flex flex-col-reverse sm:flex w-[100%] h-[90%]'>
+      <div className='overflow-auto border-2 w-full sm:w-[75%] '>  
         {questions.length === 0 ? (
           <p className='text-xl'>No questions available in the test</p>
           ) : (
@@ -126,10 +125,10 @@ export default function Test() {
             <div className=' flex flex-col p-4 gap-5 w-full'>
               {questions.map((question, index) => (
                 <div key={question._id} className='w-full border-b-2 gap-2 flex flex-col items-start justify-start'>
-                  <p className='text-3xl text-[#161D29]'>{question.questionText}</p>
+                  <p className='text-md sm:text-2xl break-words text-[#161D29]'>{question.questionText}</p>
                   <ul>
                     {question.options.map((option, optionIndex) => (
-                      <li className='text-2xl p-2' key={`${question._id}-${optionIndex}`}>
+                      <li className='text-lg sm:text-xl p-1 sm:p-2' key={`${question._id}-${optionIndex}`}>
                         <lable className='flex gap-3'>
                           <input
                             type="radio"
@@ -147,31 +146,28 @@ export default function Test() {
               ))}
             </div>
 
-          <div className=' flex px-8 w-[70%] justify-between items-center'>
+          <div className=' flex px-8 w-[50%] sm:w-[70%] justify-between items-center'>
           <Button className="relative " onClick={() => handleSubmit()  }>
-  Submit Test
-</Button>
-
-            
+            Submit Test
+          </Button>          
           </div>
         </div>
         )}
-    </div>
-    {isOpen && <AlertDailogBox isOpen={isOpen} setIsOpen={setIsOpen} /> }
-          <div className='flex flex-col w-[25%] items-center h-full '>
-            <div className='w-[80%] h-[40%] mt-5'>
-            <video
-                        ref={videoRef}
-                        autoPlay
-                        playsInline
-                        muted
-                        className=" border-2 rounded-3xl mb-4 transform -scale-x-100"
-                    />
-            </div>
-      
-          </div>
       </div>
-
+      <div className=' border-2 flex flex-col w-full sm:w-[25%] items-center h-auto '>
+        <div className='sm:w-[80%] w-[50%] sm:h-[40%] h-[50%] mt-5'>
+          <video
+                    ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className=" border-2 rounded-xl sm:rounded-3xl mb-4 transform -scale-x-100"
+                  />
+          </div>
+         
+        </div>
+      </div>
+    {isOpen && <AlertDailogBox isOpen={isOpen} setIsOpen={setIsOpen} /> }
   </div>
   )
 }

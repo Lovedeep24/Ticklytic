@@ -109,7 +109,6 @@ fetchSubmissions();
                   <Link to="/createTest"><DropdownMenuItem>Create Test</DropdownMenuItem></Link>
                   <Link to="/users"><DropdownMenuItem>Users</DropdownMenuItem></Link>
                   <Link to="/submissions"><DropdownMenuItem>Submissions</DropdownMenuItem></Link>
-                  <Link to="/addQuestions"><DropdownMenuItem>Add Questions</DropdownMenuItem></Link>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="bg-red-500 text-white " onClick={handleLogout}>Logout</DropdownMenuItem>

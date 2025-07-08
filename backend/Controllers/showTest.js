@@ -1,15 +1,14 @@
 const Test = require('../models/testSchema');
 
 const showTest = async (req, res) => {  
-    const { testId } = req.params;  // Correct way to get testId from route parameters
-    console.log(testId);  // Log the testId to verify if it's coming through correctly
-
+    const { testId } = req.params;  
+    console.log(testId);  
     try {
         const tests = await Test.findById(testId).populate('questions');
         console.log(tests);
 
         if (!tests) {
-            return res.status(404).json({ message: "No question found" });  // Use return here to avoid continuing further execution
+            return res.status(404).json({ message: "No question found" }); 
         }
 
         res.status(200).json({

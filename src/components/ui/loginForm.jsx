@@ -80,8 +80,7 @@ const [errors, setErrors] = useState({
 
 
   return (
-    (<div 
-    className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
+    (<div className="h-full w-full mx-auto flex items-center justify-center p-4 md:p-8 shadow-input bg-white dark:bg-black">
  
       <div className=" h-[100%] w-[65%] flex gap-1 flex-col items-center justify-center">
       <h1 className="text-3xl font-bold mb-20">LOGIN TO <span className="text-[#7142CA]">TICKLYTIC</span></h1>

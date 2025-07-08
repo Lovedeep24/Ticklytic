@@ -3,6 +3,7 @@ import {useState} from 'react';
 import { Button } from "@/components/ui/button";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import { jwtDecode } from 'jwt-decode';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
@@ -28,7 +29,7 @@ export default function CreateTest() {
   const [duration,setDuration]=useState(0);
   const [openQuestionDialog,setOpenQuestionDialog]= useState(false);
   const id = useId();
-  const maxLength = 50;
+  const maxLength = 80;
   const {
     value,
     characterCount,
@@ -39,6 +40,9 @@ export default function CreateTest() {
 
   const handleCreation = async () => {
     const token = localStorage.getItem("accessToken");
+    console.log(token)
+     const decode=jwtDecode(token);
+          console.log(decode);
       if(!testName || !description || !duration)
       { 
         toast.error("All fields are mandatory");
@@ -54,16 +58,16 @@ export default function CreateTest() {
         return;
       }
       try {
-          const response = await axios.post("http://localhost:9000/createTest",
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              }
-            } ,{
+          const response = await axios.post("http://localhost:9000/createTest",{
               testName,
               description,
               duration,
-          }); 
+          },
+                    {
+              headers: {
+            Authorization: `Bearer ${token}`,
+          }
+            } ); 
           if (response.status === 200) {
             setTestId(response.data.testId);
             console.log(testId);
@@ -100,12 +104,12 @@ export default function CreateTest() {
     }
   return (
     <>
-    <div className="p-5 font-sans boorder-2  bg-gray-100 ">
+    <div className="p-5 font-sans boorder-2 flex flex-col items-center justify-between h-screen bg-gray-100 ">
     <div className='flex w-full justify-between items-center p-4'>
-                <h1 className='text-[#333] font-bold text-3xl'>Admin Portal</h1>
-                <h1 className="text-xl font-bold">Test Cluster</h1>
+                <h1 className='text-[#333] font-bold text-xl sm:text-3xl'>Admin Portal</h1>
+                <h1 className="text-lg sm:text-xl font-bold">Create Test</h1>
                 <DropdownMenu>
-                <DropdownMenuTrigger className='size-13' asChild>
+                <DropdownMenuTrigger className='size-10 sm:size-13' asChild>
                   <Button variant="outline" aria-label="Open account menu">
                     <CircleUserRound  size={20} strokeWidth={2} aria-hidden="true" />
                   </Button>
@@ -115,13 +119,11 @@ export default function CreateTest() {
                     <span className="text-xs font-normal text-foreground">Welcome, Admin</span>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuGroup className='text-md'>
-                  <Link to="/"><DropdownMenuItem>Home</DropdownMenuItem></Link>
+                  <DropdownMenuGroup className='text-sm sm:text-md'>
                   <Link to="/admin"><DropdownMenuItem>Admin Home</DropdownMenuItem></Link>
                   <Link to="/createTest"><DropdownMenuItem>Create Test</DropdownMenuItem></Link>
                   <Link to="/users"><DropdownMenuItem>Users</DropdownMenuItem></Link>
                   <Link to="/submissions"><DropdownMenuItem>Submissions</DropdownMenuItem></Link>
-                  <Link to="/addQuestions"><DropdownMenuItem>Add Questions</DropdownMenuItem></Link>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="bg-red-500 text-white " onClick={handleLogout}>Logout</DropdownMenuItem>
@@ -130,7 +132,7 @@ export default function CreateTest() {
                 </div>
 
       <div className="flex flex-col w-full justify-center items-center">
-        <div className="flex flex-col w-[30%] p-5 rounded-xl gap-5 border-2 ">
+        <div className="flex flex-col w-[80%] sm:w-[30%] p-5 rounded-xl gap-5 border-2 ">
           <div className='flex flex-col gap-1 text-start'>
           <Label className="text-lg ">Test Name:</Label>
           <Input type='text' placeholder='Test Name' value={testName} onChange={(e)=>setTestName(e.target.value)} />
@@ -169,11 +171,12 @@ export default function CreateTest() {
           </div>
              
         </div>
-      </div>
-       
-       <div className=" border-2">
+         <div className=" mt-4">
      <InteractiveHoverButton onClick={handleCreation} />
    </div>
+      </div>
+       
+      
    <Toaster richColors position="top-center" />
     <AddQuestionsComp open={openQuestionDialog} setOpen={setOpenQuestionDialog} testId={testId} />
   </div>
