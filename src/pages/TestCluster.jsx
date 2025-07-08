@@ -53,7 +53,7 @@ export default function TestCluster() {
       navigate("/permissions");
     }
   return (
-    <div className='bg-black min-h-screen border-2 border-amber-300 w-full m-0 p-0'>
+    <div className='bg-black min-h-screen w-full m-0 p-0'>
        <div className='flex flex-col p-3 bg-[#161D29] items-center justify-center'>
         <div className='flex justify-between w-full items-center'>
         <div className="text-white text-xl p-5 flex items-center justify-center h-10 font-bold ">

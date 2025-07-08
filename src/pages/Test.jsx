@@ -101,7 +101,7 @@ export default function Test() {
       }
     };
   return (
-    <div className= ' w-screen h-screen m-0 p-0'>
+    <div className= 'w-screen h-screen m-0 p-0'>
       <div className='flex flex-col p-3 bg-[#161D29] items-center justify-center'>
         <div className='flex justify-between w-full items-center'>
         <div className="text-white text-xl p-5 flex items-center justify-center h-10 font-bold ">
@@ -116,8 +116,8 @@ export default function Test() {
         </div>
       </div>
       
-    <div className='flex flex-col-reverse sm:flex w-[100%] h-[90%]'>
-      <div className='overflow-auto border-2 w-full sm:w-[75%] '>  
+    <div className='flex flex-col sm:flex-row w-[100%] h-[90%]'>
+      <div className='overflow-auto  w-full sm:w-[75%] '>  
         {questions.length === 0 ? (
           <p className='text-xl'>No questions available in the test</p>
           ) : (
@@ -154,7 +154,7 @@ export default function Test() {
         </div>
         )}
       </div>
-      <div className=' border-2 flex flex-col w-full sm:w-[25%] items-center h-auto '>
+      <div className='flex flex-col w-full sm:w-[25%] items-center h-auto '>
         <div className='sm:w-[80%] w-[50%] sm:h-[40%] h-[50%] mt-5'>
           <video
                     ref={videoRef}

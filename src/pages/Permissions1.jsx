@@ -45,7 +45,7 @@ export default function Permissions() {
     navigate(`/test/${testId}`);
   }
   return (
-    <div className="flex-col sm:flex border-red-400 items-center justify-center bg-[rgb(22,29,41)] w-screen h-screen">
+    <div className="flex flex-col sm:flex-row border-red-400 items-center justify-center bg-[rgb(22,29,41)] w-screen h-screen">
     
       <div className="sm:w-1/2 w-[100%]   p-4 flex justify-center items-center ">
         <video
